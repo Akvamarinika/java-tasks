@@ -17,7 +17,7 @@ public class Main {
     private static double minInvestmentsAmount = 100000;
 
     public static void main(String[] args) {
-        /* TODO Рассчитайте минимальную сумму дохода, при вводе которой программа ответит, что инвестировать можно.*/
+        System.out.println("Минимальная сумма дохода " + getMinSumIncome());
 
         while (true) {
             System.out.println("Введите сумму доходов компании за месяц " +
@@ -68,5 +68,20 @@ public class Main {
             financeManagerSalary;
     }
 
+    private static int getMinSumIncome(){
+        int startIncome = minIncome;
+        while (true) {
+            double expensesWithTax = 0;
+            double expenses = calculateFixedCharges() + startIncome * managerPercent;
+            double tax = (startIncome - expenses) * mainTaxPercent;
+            expensesWithTax = expenses + tax;
+            if (startIncome-expensesWithTax >= minInvestmentsAmount)
+                return startIncome;
+            else {
+                startIncome++;
+            }
+        }
+
+    }
 
 }
