@@ -1,6 +1,7 @@
 
 public class Cat
 {
+    private static int count;
     private double originWeight;
     private double weight;
 
@@ -15,6 +16,18 @@ public class Cat
         minWeight = 1000.0;
         maxWeight = 9000.0;
         sumFood = 0;
+        count++;
+
+    }
+
+    public static int getCount(){
+        return count;
+    }
+
+    public  void catDestroy(){
+        if (this.getStatus().equals("Dead") || this.getStatus().equals("Exploded") ){
+            count--;
+        }
 
     }
 
