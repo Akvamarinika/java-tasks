@@ -1,7 +1,6 @@
-/*TODO  1.	Выведите в консоль вес созданных кошек.
-        2.	Покормите двух кошек, после этого распечатайте их вес (убедитесь, что вес изменился).
-        3.	Перекормите кошку, чтобы ее статус стал Exploded.
-        4.	«Замяукайте» кошку до статуса Dead.
+/*TODO  1.	Создайте в классе Cat метод, который возвращает сумму съеденной еды текущей кошки.
+        2.	Создайте в классе Cat метод «Сходить в туалет» pee(), который уменьшает вес кошки и что-нибудь печатает.
+
 */
 public class Loader
 {
@@ -37,13 +36,21 @@ public class Loader
         System.out.println("Status Murka: " + overfeedCat(murka) + '\n');
 
         System.out.println("Status Marsik: " + marsik.getStatus());
-        System.out.println("Status Marsik: " + overmeowCat(marsik));
+        System.out.println("Status Marsik: " + overmeowCat(marsik) + '\n');
 
+        vaska.feed(150.0);
+        barsik.feed(50.5);
+
+        System.out.println("Smyakal Vaska: " + vaska.getSumFood() + " gr");
+        System.out.println("Smyakal Marsik: " + barsik.getSumFood()  + " gr" + '\n');
+
+        murka.pee();
+        System.out.println("Status Murka: " + murka.getStatus());
     }
 
     public static String overfeedCat(Cat cat){
         while (!cat.getStatus().equals("Exploded")){
-            cat.feed(200.0);
+            cat.feed(50.0);
         }
         return cat.getStatus();
     }
