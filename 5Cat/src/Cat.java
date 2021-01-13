@@ -2,11 +2,11 @@
 public class Cat
 {
     private static int count;
-    private double originWeight;
+    private final double originWeight;
     private double weight;
 
-    private double minWeight;
-    private double maxWeight;
+    private final double minWeight;
+    private final double maxWeight;
     private double sumFood;
 
     public Cat()
@@ -40,21 +40,50 @@ public class Cat
         return sumFood;
     }
 
+    private boolean isAlive(){
+        return (weight > minWeight) && (weight < maxWeight);
+    }
+
     public void meow()
     {
-        weight = weight - 1;
-        System.out.println("Meow");
+        if (isAlive()){
+            weight = weight - 1;
+            System.out.println("Meow");
+        } else {
+            System.out.println("Cat can't meow. This cat dead or exploded");
+        }
+
     }
 
     public void feed(Double amount)
     {
-        weight = weight + amount;
-        this.amountOfFoodEaten(amount);
+        if (isAlive()){
+            weight = weight + amount;
+            this.amountOfFoodEaten(amount);
+        } else {
+            System.out.println("Cat can't feed. This cat dead or exploded");
+        }
+
     }
 
     public void drink(Double amount)
     {
-        weight = weight + amount;
+        if (isAlive()){
+            weight = weight + amount;
+        } else {
+            System.out.println("Cat can't drink. This cat dead or exploded");
+        }
+
+    }
+
+    public void pee(){
+        if (isAlive()){
+            weight -= 50;
+            System.out.println("Cat went to the toilet...");
+        } else {
+            System.out.println("Cat can't pee. This cat dead or exploded");
+        }
+
     }
 
     public String getStatus()
@@ -78,9 +107,6 @@ public class Cat
         return sumFood;
     }
 
-    public void pee(){
-        weight -= 50;
-        System.out.println("Cat went to the toilet...");
-    }
+
 
 }

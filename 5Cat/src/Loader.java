@@ -1,6 +1,6 @@
-/*TODO  1.	Создайте у класса Cat статическую переменную count, которая увеличивается на 1, если кошку создали, и убывает на 1, если кошка взорвалась или умерла.
-        2.	Создайте статический метод getCount(), который возвращает количество кошек.
-
+/*TODO  Придумайте способ, который поможет проверить, жива ли кошка, на основе значения её веса.
+   Используя это, запретите неживой кошке есть, пить, ходить в туалет,
+   выполняя проверку веса внутри методов, которые изменяют вес кошки.
 
 */
 public class Loader
@@ -40,14 +40,21 @@ public class Loader
         System.out.println("Status Marsik: " + overmeowCat(marsik) + '\n');
         marsik.catDestroy();
 
+        barsik.pee();
+        System.out.println("Weight Barsik: " + barsik.getWeight() + '\n');
+
         vaska.feed(150.0);
         barsik.feed(50.5);
-
         System.out.println("Smyakal Vaska: " + vaska.getSumFood() + " gr");
         System.out.println("Smyakal Barsik: " + barsik.getSumFood()  + " gr" + '\n');
 
         murka.pee();
+        murka.drink(30.15);
         System.out.println("Status Murka: " + murka.getStatus() + '\n');
+
+        marsik.feed(55.5);
+        marsik.meow();
+        System.out.println("Status Marsik: " + murka.getStatus() + '\n');
 
         System.out.println("Number of cats: " + Cat.getCount());
     }
