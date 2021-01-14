@@ -54,7 +54,19 @@ public class Loader
         marsik.meow();
         System.out.println("Status Marsik: " + murka.getStatus() + '\n');
 
-        System.out.println("Number of cats: " + Cat.getCount());
+        System.out.println("Number of cats: " + Cat.getCount() + '\n');
+
+        vaska.setColor(Colors.FAWN);
+        marsik.setColor(Colors.CREAM);
+        barsik.setColor(Colors.GINGER);
+        princess.setColor(Colors.BLUE_POINT);
+        murka.setColor(Colors.FAWN);
+        System.out.println("Color Vaska: " + vaska.getColor() );
+        System.out.println("Color Marsik: " + marsik.getColor());
+        System.out.println("Color Barsik: " + barsik.getColor());
+        System.out.println("Color Princess: " + princess.getColor());
+        System.out.println("Color Murka: " + murka.getColor());
+
     }
 
     public static String overfeedCat(Cat cat){

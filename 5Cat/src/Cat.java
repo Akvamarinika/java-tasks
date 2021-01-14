@@ -8,6 +8,7 @@ public class Cat
     private static int count;
     private double weight;
     private double sumFood;
+    private Colors color;
 
     public Cat()
     {
@@ -17,6 +18,7 @@ public class Cat
         MAX_WEIGHT = 9000.0;
         sumFood = 0;
         count++;
+
 
     }
 
@@ -38,6 +40,14 @@ public class Cat
 
     public Double getSumFood(){
         return sumFood;
+    }
+
+    public void setColor(Colors color){
+        this.color = color;
+    }
+
+    public Colors getColor(){
+        return  color;
     }
 
     private boolean isAlive(){
