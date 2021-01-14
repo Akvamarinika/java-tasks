@@ -14,6 +14,7 @@ public class Loader
         Cat barsik = new Cat();
         Cat princess = new Cat();
         Cat murka = new Cat();
+        Cat kitten;
         System.out.println("Number of cats: " + Cat.getCount());
 
         System.out.println("Weight Vaska: " + vaska.getWeight());
@@ -79,7 +80,12 @@ public class Loader
         Cat persik = new Cat(2500.0);
         System.out.println("Breed Persik: " + persik.getBreed());
         System.out.println("Color Persik: " + persik.getColor());
-        System.out.println("Weight Persik: " + persik.getWeight());
+        System.out.println("Weight Persik: " + persik.getWeight()  + '\n');
+
+        kitten = getKitten();
+        System.out.println("Breed kitten: " + kitten.getBreed());
+        System.out.println("Color kitten: " + kitten.getColor());
+        System.out.println("Weight kitten: " + kitten.getWeight());
 
 
 
@@ -97,6 +103,11 @@ public class Loader
             cat.meow();
         }
         return cat.getStatus();
+    }
+
+    private static Cat getKitten(){
+        return new Cat(1100.00);
+        
     }
 
 }
