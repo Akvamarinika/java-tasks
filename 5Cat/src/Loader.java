@@ -1,5 +1,8 @@
-/*TODO  1.	Создайте в классе Cat константы: «количество глаз», «минимальный вес», «максимальный вес».
-        2.	Создайте enum Color с окрасами кошек.
+/*TODO  1.	Сделайте в классе Cat ещё один конструктор, чтобы можно было создать кошку с весом, переданным в конструктор.
+        2.	Создайте в главном классе Loader метод генерации котёнка private static Cat getKitten().
+        Он должен возвращать кошку с весом 1100.00 грамм с помощью конструктора, в который передаём вес кошки.
+        3.	Создайте три объекта класса Cat в методе main(), используя метод getKitten().
+
 */
 public class Loader
 {
@@ -71,7 +74,12 @@ public class Loader
         System.out.println("Breed Marsik: " + marsik.getBreed() + " " + marsik.getBreed().rusName());
         System.out.println("Breed Barsik: " + barsik.getBreed() + " " + barsik.getBreed().rusName());
         System.out.println("Breed Princess: " + princess.getBreed() + " " + princess.getBreed().rusName());
-        System.out.println("Breed Murka: " + murka.getBreed() + " " + murka.getBreed().rusName());
+        System.out.println("Breed Murka: " + murka.getBreed() + " " + murka.getBreed().rusName() + '\n');
+
+        Cat persik = new Cat(2500.0);
+        System.out.println("Breed Persik: " + persik.getBreed());
+        System.out.println("Color Persik: " + persik.getColor());
+        System.out.println("Weight Persik: " + persik.getWeight());
 
 
 
