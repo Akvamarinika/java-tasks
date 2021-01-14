@@ -15,6 +15,9 @@ public class Loader
         Cat princess = new Cat();
         Cat murka = new Cat();
         Cat kitten;
+        Cat kitten2;
+        Cat kitten3;
+
         System.out.println("Number of cats: " + Cat.getCount());
 
         System.out.println("Weight Vaska: " + vaska.getWeight());
@@ -85,7 +88,17 @@ public class Loader
         kitten = getKitten();
         System.out.println("Breed kitten: " + kitten.getBreed());
         System.out.println("Color kitten: " + kitten.getColor());
-        System.out.println("Weight kitten: " + kitten.getWeight());
+        System.out.println("Weight kitten: " + kitten.getWeight()   + '\n');
+
+        kitten2 = getKitten();
+        System.out.println("Breed kitten2: " + kitten2.getBreed());
+        System.out.println("Color kitten2: " + kitten2.getColor());
+        System.out.println("Weight kitten2: " + kitten2.getWeight()   + '\n');
+
+        kitten3 = getKitten();
+        System.out.println("Breed kitten3: " + kitten3.getBreed());
+        System.out.println("Color kitten3: " + kitten3.getColor());
+        System.out.println("Weight kitten3: " + kitten3.getWeight()   + '\n');
 
 
 
@@ -107,7 +120,7 @@ public class Loader
 
     private static Cat getKitten(){
         return new Cat(1100.00);
-        
+
     }
 
 }
