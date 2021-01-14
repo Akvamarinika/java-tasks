@@ -26,6 +26,14 @@ public class Cat
 
     }
 
+    public Cat copyCat(Cat cat){
+        this.breed = cat.breed;
+        this.color = cat.color;
+        this.weight = cat.weight;
+
+        return this;
+    }
+
     public static int getCount(){
         return count;
     }

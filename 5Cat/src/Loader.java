@@ -1,5 +1,5 @@
-/*TODO  1.	Создайте в классе Cat константы: «количество глаз», «минимальный вес», «максимальный вес».
-        2.	Создайте enum Color с окрасами кошек.
+/*TODO  1.	Сделайте метод создания «глубокой» копии кошки. Это означает, что все параметры одной кошки равны параметрам другой.
+   Используйте для этого метод копирования или конструктор копирования.
 */
 public class Loader
 {
@@ -16,7 +16,6 @@ public class Loader
         System.out.println("Weight Vaska: " + vaska.getWeight());
         System.out.println("Weight Marsik: " + marsik.getWeight());
         System.out.println("Weight Barsik: " + barsik.getWeight());
-        System.out.println("Weight Princess: " + princess.getWeight());
         System.out.println("Weight Murka: " + murka.getWeight() + '\n');
 
         System.out.println("Status Vaska: " + vaska.getStatus());
@@ -61,18 +60,25 @@ public class Loader
         barsik.setColor(Colors.GINGER);
         princess.setColor(Colors.BLUE_POINT);
         murka.setColor(Colors.FAWN);
+
         System.out.println("Color Vaska: " + vaska.getColor() );
         System.out.println("Color Marsik: " + marsik.getColor());
         System.out.println("Color Barsik: " + barsik.getColor());
-        System.out.println("Color Princess: " + princess.getColor());
         System.out.println("Color Murka: " + murka.getColor() + '\n');
 
         System.out.println("Breed Vaska: " + vaska.getBreed() + " " + vaska.getBreed().rusName());
         System.out.println("Breed Marsik: " + marsik.getBreed() + " " + marsik.getBreed().rusName());
         System.out.println("Breed Barsik: " + barsik.getBreed() + " " + barsik.getBreed().rusName());
-        System.out.println("Breed Princess: " + princess.getBreed() + " " + princess.getBreed().rusName());
-        System.out.println("Breed Murka: " + murka.getBreed() + " " + murka.getBreed().rusName());
+        System.out.println("Breed Murka: " + murka.getBreed() + " " + murka.getBreed().rusName() + '\n');
 
+        System.out.println("Color Princess: " + princess.getColor());
+        System.out.println("Breed Princess: " + princess.getBreed() + " " + princess.getBreed().rusName());
+        System.out.println("Weight Princess: " + princess.getWeight());
+
+        Cat copyCat = new Cat().copyCat(princess);
+        System.out.println("Color copyCat: " + copyCat.getColor() );
+        System.out.println("Breed copyCat: " + copyCat.getBreed() + " " + copyCat.getBreed().rusName());
+        System.out.println("Weight copyCat: " + copyCat.getWeight());
 
 
     }
