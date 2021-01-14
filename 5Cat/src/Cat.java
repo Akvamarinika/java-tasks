@@ -11,18 +11,23 @@ public class Cat
     private Colors color;
     private Breeds breed;
 
-
     public Cat()
     {
         int idx = (int)Math.round(((Breeds.values().length - 1) * Math.random()));
+        int idxColor = (int) Math.round((Colors.values().length - 1) * Math.random());
         breed = Breeds.values()[idx];
+        color = Colors.values()[idxColor];
         weight = 1500.0 + 3000.0 * Math.random();
         originWeight = weight;
         MIN_WEIGHT = 1000.0;
         MAX_WEIGHT = 9000.0;
         sumFood = 0;
         count++;
+    }
 
+    public Cat(double weight){
+        this();
+        this.weight = weight;
 
     }
 

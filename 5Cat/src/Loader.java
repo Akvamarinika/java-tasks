@@ -1,3 +1,8 @@
+/*TODO  1.	Сделайте в классе Cat ещё один конструктор, чтобы можно было создать кошку с весом, переданным в конструктор.
+        2.	Создайте в главном классе Loader метод генерации котёнка private static Cat getKitten().
+        Он должен возвращать кошку с весом 1100.00 грамм с помощью конструктора, в который передаём вес кошки.
+        3.	Создайте три объекта класса Cat в методе main(), используя метод getKitten().
+
 /*TODO  1.	Сделайте метод создания «глубокой» копии кошки. Это означает, что все параметры одной кошки равны параметрам другой.
    Используйте для этого метод копирования или конструктор копирования.
 */
@@ -11,11 +16,16 @@ public class Loader
         Cat barsik = new Cat();
         Cat princess = new Cat();
         Cat murka = new Cat();
+        Cat kitten;
+        Cat kitten2;
+        Cat kitten3;
+
         System.out.println("Number of cats: " + Cat.getCount());
 
         System.out.println("Weight Vaska: " + vaska.getWeight());
         System.out.println("Weight Marsik: " + marsik.getWeight());
         System.out.println("Weight Barsik: " + barsik.getWeight());
+        System.out.println("Weight Princess: " + princess.getWeight());
         System.out.println("Weight Murka: " + murka.getWeight() + '\n');
 
         System.out.println("Status Vaska: " + vaska.getStatus());
@@ -64,6 +74,7 @@ public class Loader
         System.out.println("Color Vaska: " + vaska.getColor() );
         System.out.println("Color Marsik: " + marsik.getColor());
         System.out.println("Color Barsik: " + barsik.getColor());
+        System.out.println("Color Princess: " + princess.getColor());
         System.out.println("Color Murka: " + murka.getColor() + '\n');
 
         System.out.println("Breed Vaska: " + vaska.getBreed() + " " + vaska.getBreed().rusName());
@@ -73,7 +84,27 @@ public class Loader
 
         System.out.println("Color Princess: " + princess.getColor());
         System.out.println("Breed Princess: " + princess.getBreed() + " " + princess.getBreed().rusName());
-        System.out.println("Weight Princess: " + princess.getWeight());
+        System.out.println("Weight Princess: " + princess.getWeight() + '\n');
+
+        Cat persik = new Cat(2500.0);
+        System.out.println("Breed Persik: " + persik.getBreed());
+        System.out.println("Color Persik: " + persik.getColor());
+        System.out.println("Weight Persik: " + persik.getWeight()  + '\n');
+
+        kitten = getKitten();
+        System.out.println("Breed kitten: " + kitten.getBreed());
+        System.out.println("Color kitten: " + kitten.getColor());
+        System.out.println("Weight kitten: " + kitten.getWeight()   + '\n');
+
+        kitten2 = getKitten();
+        System.out.println("Breed kitten2: " + kitten2.getBreed());
+        System.out.println("Color kitten2: " + kitten2.getColor());
+        System.out.println("Weight kitten2: " + kitten2.getWeight()   + '\n');
+
+        kitten3 = getKitten();
+        System.out.println("Breed kitten3: " + kitten3.getBreed());
+        System.out.println("Color kitten3: " + kitten3.getColor());
+        System.out.println("Weight kitten3: " + kitten3.getWeight()   + '\n');
 
         Cat copyCat = new Cat().copyCat(princess);
         System.out.println("Color copyCat: " + copyCat.getColor() );
@@ -95,6 +126,11 @@ public class Loader
             cat.meow();
         }
         return cat.getStatus();
+    }
+
+    private static Cat getKitten(){
+        return new Cat(1100.00);
+
     }
 
 }
