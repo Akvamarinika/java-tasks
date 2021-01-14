@@ -65,7 +65,15 @@ public class Loader
         System.out.println("Color Marsik: " + marsik.getColor());
         System.out.println("Color Barsik: " + barsik.getColor());
         System.out.println("Color Princess: " + princess.getColor());
-        System.out.println("Color Murka: " + murka.getColor());
+        System.out.println("Color Murka: " + murka.getColor() + '\n');
+
+        System.out.println("Breed Vaska: " + vaska.getBreed() + " " + vaska.getBreed().rusName());
+        System.out.println("Breed Marsik: " + marsik.getBreed() + " " + marsik.getBreed().rusName());
+        System.out.println("Breed Barsik: " + barsik.getBreed() + " " + barsik.getBreed().rusName());
+        System.out.println("Breed Princess: " + princess.getBreed() + " " + princess.getBreed().rusName());
+        System.out.println("Breed Murka: " + murka.getBreed() + " " + murka.getBreed().rusName());
+
+
 
     }
 
