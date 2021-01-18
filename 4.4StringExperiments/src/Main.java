@@ -1,7 +1,6 @@
 /*TODO:
-    Напишите метод String searchAndReplaceDiamonds(String text, String placeholder)
-    который будет заменять в переданной строке String text всё содержимое скобок <> (англ. diamonds)
-    и сами скобки на переданную строку в String placeholder.
+    Напишите программу, которая на входе через консоль принимает фамилию, имя и отчество одной строкой
+    (например, «Иванов Сергей Петрович») и выводит фамилию, имя и отчество отдельно.
 
 
 * */
@@ -15,6 +14,10 @@ public class Main {
         String txt = "Номер кредитной карты <4008 1234 5678> 8912, номер кредитной карты <1548 1258 1452> 4580";
         //printWithIndexes(txt);
         System.out.println(searchAndReplaceDiamonds(txt, "***"));
+
+        System.out.println("Введите ФИО: ");
+        String input = new Scanner(System.in).nextLine();
+        printFullName(input);
 
 
     }
@@ -61,6 +64,26 @@ public class Main {
             }
         }
         return buildStr;
+
+    }
+
+    public  static void printFullName(String str){
+        //str = "Иванов Сергей Петрович";
+        String firstName = str.substring(0, str.indexOf(" ") + 1);
+        System.out.println(str);
+        String surname = str.substring(firstName.length(), str.indexOf(" ",firstName.length() + 1));
+        int idx = surname.length() + firstName.length();
+        String patronymic = str.substring(idx).trim();
+
+        if (!firstName.isEmpty()){
+            System.out.println("Фамилия: " + firstName);
+        }
+        if (!surname.isEmpty()){
+            System.out.println("Имя: " + surname);
+        }
+        if (!patronymic.isEmpty()){
+            System.out.println("Отчество: " + patronymic);
+        }
 
     }
 
