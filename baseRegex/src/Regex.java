@@ -1,7 +1,9 @@
 import java.util.Scanner;
 /*TODO:
-    Измените программу, написанную в уроке №4.5: вводимая строка с фамилией, именем и отчеством должна разбиваться
-    с использованием регулярного выражения.
+    Реализуйте удаление лишних символов при вводе номера телефона в консоли и проверку соответствия номера
+     формату мобильных номеров России. Если введённую строку нельзя привести к формату мобильного номера —
+     выводите сообщение о неверном вводе. Телефон может быть введен не только в формате 79091234567, но и с лишними символами.
+     // format +7 903 123-45-67
  */
 public class Regex {
     public static void main(String[] args){
@@ -14,10 +16,36 @@ public class Regex {
             String input = new Scanner(System.in).nextLine();
             printFullName(input);
 
+            System.out.println(checkMobileNumber("+7 909 123-45-67"));
+            System.out.println(checkMobileNumber("+7 (909) 1234567"));
+            System.out.println(checkMobileNumber("8 (950) 123-45-67"));
+            System.out.println(checkMobileNumber("8-905-1234567"));
+            System.out.println(checkMobileNumber("9-453-1234567"));
+            System.out.println(checkMobileNumber("8-905-123"));
+            System.out.println(checkMobileNumber("905-45623-11"));
+            System.out.println(checkMobileNumber("905-1234567"));
+            System.out.println(checkMobileNumber("8-905-12345672342"));
+
+
 
 
 
         }
+
+    public  static  String checkMobileNumber(String number){
+        number = number.replaceAll("[^\\+0-9]+", "" );
+        //System.out.println(number);
+        if (number.matches("(\\+7|8?)(\\d{10})")){
+            number = number.replaceAll("^8|\\+7", "+7 ");
+            number = number.replaceAll("^9", "+7 9");
+            StringBuilder num = new StringBuilder(number);
+            num.insert(6," ").insert(10,"-").insert(13, "-");
+            return num.toString();
+        }else {
+            return "Неверный формат номера!";
+        }
+
+    }
 
         public static int earnings(String str){
             int sum = 0;
@@ -57,8 +85,8 @@ public class Regex {
             if (!patronymic.isEmpty()){
                 System.out.println("Отчество: " + patronymic);
             }
-
         }
+
 
         public static void splitText(){
             String txt = "Following the violence, reports emerged online of some Bumble users switching the filter to find those who had taken part - and report them to authorities.\n" +
