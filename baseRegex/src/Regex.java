@@ -1,9 +1,9 @@
 import java.util.Scanner;
 /*TODO:
-    Реализуйте удаление лишних символов при вводе номера телефона в консоли и проверку соответствия номера
-     формату мобильных номеров России. Если введённую строку нельзя привести к формату мобильного номера —
-     выводите сообщение о неверном вводе. Телефон может быть введен не только в формате 79091234567, но и с лишними символами.
-     // format +7 903 123-45-67
+    Изменить метод String searchAndReplaceDiamonds(String text, String placeholder),
+    который будет заменять в переданной строке String text всё содержимое скобок <> и сами скобки
+    на переданную строку в String placeholder, используя регулярные выражения.
+
  */
 public class Regex {
     public static void main(String[] args){
@@ -26,11 +26,20 @@ public class Regex {
             System.out.println(checkMobileNumber("905-1234567"));
             System.out.println(checkMobileNumber("8-905-12345672342"));
 
+            String txt = "Номер кредитной карты <4008 1234 5678> 8912, номер кредитной карты <1548 1258 1452> 4580";
+            System.out.println(searchAndReplaceDiamonds(txt, "***"));
+
 
 
 
 
         }
+
+    public static String searchAndReplaceDiamonds(String text, String placeholder){
+        text = text.replaceAll("<[0-9 \\s]+>", placeholder);
+        return text;
+
+    }
 
     public  static  String checkMobileNumber(String number){
         number = number.replaceAll("[^\\+0-9]+", "" );
