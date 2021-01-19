@@ -1,7 +1,7 @@
 import java.util.Scanner;
 /*TODO:
-   Возьмите английский текст (не менее 100 слов) и напишите программу, которая будет разбивать его на слова и печатать слова в консоли.
-    Знаки препинания не являются частью слова.
+    Измените программу, написанную в уроке №4.5: вводимая строка с фамилией, именем и отчеством должна разбиваться
+    с использованием регулярного выражения.
  */
 public class Regex {
     public static void main(String[] args){
@@ -9,6 +9,10 @@ public class Regex {
             System.out.println(text);
             System.out.println("Всего заработали: " + earnings(text));
             splitText();
+
+            System.out.println("\nВведите ФИО: ");
+            String input = new Scanner(System.in).nextLine();
+            printFullName(input);
 
 
 
@@ -23,6 +27,37 @@ public class Regex {
                 sum += Integer.parseInt(num);
             }
             return sum;
+        }
+
+        public  static void printFullName(String str){
+            str = str.trim().replaceAll("[^A-Za-zА-Яа-яЁё\\s]+", "");
+            System.out.println(str);
+            String[] arrStr = str.split("\\s+");
+            String firstName = "";
+            String surname = "";
+            String patronymic = "";
+            if (arrStr.length >= 2) {
+                if (arrStr.length == 2) {
+                    firstName = arrStr[0];
+                    surname = arrStr[1];
+                } else {
+                    firstName = arrStr[0];
+                    surname = arrStr[1];
+                    patronymic = arrStr[2];
+                }
+            }else {
+                System.out.println("Error: Некорректный ввод ФИО");
+            }
+
+            if (!firstName.isEmpty() && !surname.isEmpty()){
+                System.out.println("Фамилия: " + firstName);
+                System.out.println("Имя: " + surname);
+            }
+
+            if (!patronymic.isEmpty()){
+                System.out.println("Отчество: " + patronymic);
+            }
+
         }
 
         public static void splitText(){
