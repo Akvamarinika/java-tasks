@@ -1,22 +1,26 @@
 /*TODO:
-    1.	Создайте массив типа float с температурами 30 пациентов (от 32 до 40 градусов).
-    2.	Напишите код, который выводит среднюю температуру по больнице и количество здоровых пациентов
-    (с температурой от 36,2 до 36,9), а также температуры всех пациентов.
-    Вынесите в константы условия задания:
-    •	количество пациентов,
-    •	минимальная и максимальная температура пациентов,
-    •	минимальная и максимальная температура диапазона здоровых пациентов.
+    Создайте с помощью циклов двумерный массив строк. При его распечатке в консоли должен выводиться крестик из X:
+    x     x
+     x   x
+      x x
+       x
+      x x
+     x   x
+    x     x
 
 *  */
 import  java.lang.Math;
 public class Main {
     public static void  main(String[] args){
-    String str = "Каждый охотник желает знать, где сидит фазан.";
-    String[] strArr = reverse(str);
-    printArray(strArr);
+        String str = "Каждый охотник желает знать, где сидит фазан.";
+        String[] strArr = reverse(str);
+        printArray(strArr);
 
-    float[] arrSick = temperatureRandom();
-    printArrayFloat(arrSick);
+        float[] arrSick = temperatureRandom();
+        printArrayFloat(arrSick);
+
+        String[][] arrX = generateX();
+        printX(arrX);
 
 
     }
@@ -56,6 +60,34 @@ public class Main {
         }
         System.out.println("\nСредняя температура: " + avg / values.length);
         System.out.println("Количество здоровых: " + countHealthy);
+    }
+
+    public static String[][] generateX(){
+        String[][] arrX = new String[7][7];
+        for (int i = 0; i < arrX.length; i++){
+            for (int j = 0; j < arrX[i].length; j++){
+                if (i == j){
+                    arrX[i][j] = "X";
+                }else if(i+j == arrX.length - 1){
+                    arrX[i][j] = "X";
+                }else {
+                    arrX[i][j] = " ";
+                    //arrX[i][arrX[i].length-1-i] = "X";
+                }
+
+
+            }
+        }
+        return arrX;
+    }
+
+    public static void printX(String[][] arrX){
+        for (String[] arr : arrX){
+            System.out.println('\n');
+            for (String elem : arr){
+                System.out.print(elem);
+            }
+        }
     }
 
 
