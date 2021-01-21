@@ -33,7 +33,7 @@ public class Main {
         workerArray.add(programmer2);
         workerArray.add(programmer3);
         for (Worker worker : workerArray){
-            System.out.println(worker.getName());
+            worker.voice();
         }
 
         ArrayList<Programmable> programmersArray = new ArrayList<>();
