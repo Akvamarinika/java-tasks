@@ -10,14 +10,7 @@ public abstract class BankAccount {
         balance = money;
     }
 
-    public void withdrawMoney(double money){
-        if (balance > money){
-            balance -= money;
-        }else {
-            System.out.println("Недостаточно средств на счете! ");
-        }
-
-    }
+    public abstract boolean withdrawMoney(double money);
 
     public void depositAmount(double money){
         balance += money;
@@ -35,4 +28,7 @@ public abstract class BankAccount {
     public  String toString(){
         return "На вашем счете " + balance + "$";
     }
+
+    public abstract boolean send(BankAccount receiver, double amount);
+
 }

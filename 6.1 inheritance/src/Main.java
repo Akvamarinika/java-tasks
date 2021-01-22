@@ -1,6 +1,11 @@
+import accounts.BankAccount;
 import accounts.CardAccount;
 import accounts.DepositAccount;
-
+/*TODO
+*   Напишите метод в классе BankAccount:
+    boolean send(BankAccount receiver, double money)
+    для отправки денег с одного счёта на другой. Метод должен вернуть true, если деньги успешно переведены.
+*/
 public class Main {
     public static void main(String[] args){
         CardAccount cardAccount = new CardAccount();
@@ -19,6 +24,18 @@ public class Main {
         depositAccount.withdrawMoney(100);
         System.out.println(depositAccount);
         depositAccount.dateOfLastDeposit();
+
+        BankAccount bankAccountDeposit = depositAccount;
+        System.out.println(cardAccount.send(bankAccountDeposit, 400));
+        System.out.println(depositAccount);
+        System.out.println(cardAccount);
+
+        BankAccount bankAccountCard = cardAccount;
+        System.out.println(depositAccount.send(bankAccountCard, 1100));
+        System.out.println(cardAccount);
+        System.out.println(depositAccount);
+
+
 
     }
 }

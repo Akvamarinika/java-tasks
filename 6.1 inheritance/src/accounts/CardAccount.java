@@ -16,13 +16,15 @@ public class CardAccount extends BankAccount {
     }
 
     @Override
-    public void withdrawMoney(double money){
+    public boolean withdrawMoney(double money){
         double balance = getBalance();
         if (balance + (money * percent) > money){
             balance = balance - (money + (money * percent));
             super.setBalance(balance);
+            return true;
         }else {
             System.out.println("Недостаточно средств на счете! ");
+            return false;
         }
 
     }
@@ -32,4 +34,15 @@ public class CardAccount extends BankAccount {
         return  "Карточный счёт:\t"  + super.toString();
     }
 
+    @Override
+    public boolean send(BankAccount receiver, double money) {
+        System.out.println("Перевод денег с карточного на депозитный счет: ");
+        if (withdrawMoney(money)) {
+            receiver.depositAmount(money);
+            return true;
+        } else {
+            return  false;
+        }
+
+    }
 }
