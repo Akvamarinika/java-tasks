@@ -25,13 +25,13 @@ public class Main {
         System.out.println(depositAccount);
         depositAccount.dateOfLastDeposit();
 
-        BankAccount bankAccountDeposit = depositAccount;
-        System.out.println(cardAccount.send(bankAccountDeposit, 400));
+        //BankAccount bankAccountDeposit = depositAccount;
+        System.out.println(cardAccount.send(depositAccount, 400));
         System.out.println(depositAccount);
         System.out.println(cardAccount);
 
-        BankAccount bankAccountCard = cardAccount;
-        System.out.println(depositAccount.send(bankAccountCard, 1100));
+       // BankAccount bankAccountCard = cardAccount;
+        System.out.println(depositAccount.send(cardAccount, 1100));
         System.out.println(cardAccount);
         System.out.println(depositAccount);
 
