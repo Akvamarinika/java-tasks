@@ -1,4 +1,6 @@
-public class BankAccount {
+package accounts;
+
+public abstract class BankAccount {
     private double balance;
     BankAccount(){
         balance = 0;
@@ -21,11 +23,16 @@ public class BankAccount {
         balance += money;
     }
 
-    public double getBalance(){
+    public final double getBalance(){
         return balance;
     }
 
-    public void setBalance(double balance){
+    protected final void setBalance(double balance){
         this.balance = balance;
+    }
+
+    @Override
+    public  String toString(){
+        return "На вашем счете " + balance + "$";
     }
 }
