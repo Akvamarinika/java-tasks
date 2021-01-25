@@ -11,14 +11,14 @@ public class TopManager implements Employee{
 
     @Override
     public double getMonthSalary() {
-        return 0;
+        if (company.getIncome() > NEED_INCOME){
+            return (salaryFixPart * BONUS_PERCENT) * salaryFixPart;
+        }
+        return salaryFixPart;
     }
 
     @Override
     public double getSalaryFixPart() {
-       if (company.getIncome() > NEED_INCOME){
-            return (salaryFixPart * BONUS_PERCENT) * salaryFixPart;
-        }
         return salaryFixPart;
     }
 }

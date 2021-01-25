@@ -1,3 +1,4 @@
+import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -53,18 +54,23 @@ public class Company {
         }
     }
 
-  /*  List<Employee> getTopSalaryStaff(int count){
-        //ArrayList<Employee> employees = ArrayList<>();
-        //employeesList.sort();
+  List<Employee> getTopSalaryStaff(int count){
+        employeesList.sort(Comparator.comparing(Employee::getMonthSalary).reversed());
         List<Employee> employeesTopSalary = new ArrayList<>();
-        return ;
+        for (int i = 0; i < count; i++){
+            employeesTopSalary.add(employeesList.get(i));
+        }
+        return employeesTopSalary;
     }
 
-    List<Employee> getLowestSalaryStaff(int count){}
+    List<Employee> getLowestSalaryStaff(int count){
+        employeesList.sort(Comparator.comparing(Employee::getMonthSalary));
+        List<Employee> employeesLowestSalary = new ArrayList<>();
+        for (int i = 0; i < count; i++){
+            employeesLowestSalary.add(employeesList.get(i));
+        }
+        return employeesLowestSalary;
+    }
 
-    @Override
-    public int compareTo(Employee obj2) {
-        if ()
-        return 0;
-    }*/
+
 }
