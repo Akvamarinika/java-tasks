@@ -9,36 +9,16 @@ import java.util.*;
    2. Измерьте и сравните длительность каждого метода поиска.
 */
 
-/*
-* 17910000
-Введите номер для поиска:
-М670УВ55
-Прямой перебор ArrayList:
-Номер НЕ найден! -240037547 нс
-Бинарный поиск в ArrayList:
-Номер НЕ найден! -79534 нс
-Поиск в HashSet:
-Номер НЕ найден! -124110 нс
-Поиск в TreeSet:
-Номер НЕ найден! -37522 нс
-*
-*
-* Р451СН192
-Прямой перебор ArrayList:
-Номер найден! -278272635 нс
-Бинарный поиск в ArrayList:
-Номер найден! -78250 нс
 
-* */
 
 public class AutoNumbers {
     private static ArrayList<String> numbers = new ArrayList<>();
-    private static HashSet<String> hashSetNumbers = new HashSet<>(numbers);
-    private static TreeSet<String> treeSetNumbers = new TreeSet<>(numbers);
     private final static String[] SYMBOLS = new String[]{"А", "В", "С", "Е", "М", "Н", "О", "Р", "Т", "У"};
     public static void main(String[] args){
         generatorNumbers();
         System.out.println(numbers.size());
+        HashSet<String> hashSetNumbers = new HashSet<>(numbers);
+        TreeSet<String> treeSetNumbers = new TreeSet<>(numbers);
         while (true) {
             System.out.println("Введите номер для поиска: ");
             String input = new Scanner(System.in).nextLine();
@@ -54,7 +34,7 @@ public class AutoNumbers {
             for(String x : SYMBOLS){
                 for (String y : SYMBOLS){
                     for (String z : SYMBOLS){
-                        for (int num = 11; num < 1000; num += 11){
+                        for (int num = 111; num < 1000; num += 111){
                             numbers.add(String.format("%s%d%s%s%d",x,num,y,z,region));
                             //System.out.println(String.format("%s%d%s%s%d",x,num,y,z,region));
                         }
@@ -115,3 +95,46 @@ public class AutoNumbers {
 
 
 }
+//java -Xmx2048m -Xms256m
+
+/*
+* 17 910 000
+Введите номер для поиска:
+М670УВ55
+Прямой перебор ArrayList:
+Номер НЕ найден! -240037547 нс
+Бинарный поиск в ArrayList:
+Номер НЕ найден! -79534 нс
+Поиск в HashSet:
+Номер НЕ найден! -124110 нс
+Поиск в TreeSet:
+Номер НЕ найден! -37522 нс
+*
+*
+* Р451СН192
+Прямой перебор ArrayList:
+Номер найден! -278272635 нс
+Бинарный поиск в ArrayList:
+Номер найден! -78250 нс
+
+* /// 2 000 0000
+*Прямой перебор ArrayList:
+Номер найден! -45360988 нс
+Бинарный поиск в ArrayList:
+Номер найден! -69913 нс
+Поиск в HashSet:
+Номер найден! -27901 нс
+Поиск в TreeSet:
+Номер найден! -30467 нс
+Введите номер для поиска:
+*
+* З451СН192
+Прямой перебор ArrayList:
+Номер НЕ найден! -174314757 нс
+Бинарный поиск в ArrayList:
+Номер НЕ найден! -26297 нс
+Поиск в HashSet:
+Номер НЕ найден! -4490 нс
+Поиск в TreeSet:
+Номер НЕ найден! -11225 нс
+* */
