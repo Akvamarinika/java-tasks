@@ -3,15 +3,16 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CarListTest {
-    private CarList carList;
+public class CarLinkedListTest {
+    private CarLinkedList carList;
 
     @Before
     public void setUp() {
-        carList = new CarList();
+        carList = new CarLinkedList();
         for (int i = 0; i < 100; i++){
             carList.add(new Car());
         }
+        System.out.println("Size: " + carList.size());
         System.out.println(carList);
 
     }
