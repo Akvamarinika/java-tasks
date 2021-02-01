@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class CarList implements CarListMethods {
     private Car[] carLst = new Car[10];
     private int size = 0;
@@ -11,7 +13,7 @@ public class CarList implements CarListMethods {
     @Override
     public void add(Car car) {
         listEnlargement();
-        carLst[size-1] = car;
+        carLst[size] = car;
         size++;
     }
 
@@ -33,10 +35,10 @@ public class CarList implements CarListMethods {
     public boolean remove(Car car) {
         for (int i = 0; i < size; i++){
             if (car.equals(carLst[i])){
-                removeAt(i);
+                return removeAt(i);
             }
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -48,8 +50,8 @@ public class CarList implements CarListMethods {
         }
         /*for (int i = index; i < size; i++ ){
             carLst[i] = carLst[i+1];
-        }
-        size--;*/
+        }*/
+        size--;
         return true;
     }
 
@@ -72,14 +74,26 @@ public class CarList implements CarListMethods {
 
     private void listEnlargement(){
         if (size >= carLst.length){
-            Car[] tmp = new Car[carLst.length * 2];
+            //Car[] tmp = new Car[carLst.length * 2];
 
-            System.arraycopy(carLst, 0, tmp, 0, size);
-            /*for (int idx = 0; idx < size; idx++){
+            carLst = Arrays.copyOf(carLst, carLst.length * 2);
+          /*  for (int idx = 0; idx < size; idx++){
                 tmp[idx] = carLst[idx];
-            }*/
-            carLst = tmp;
+            }
+            carLst = tmp;*/
         }
     }
 
+    @Override
+    public String toString() {
+        String space;
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < this.size(); i++){
+            space = i > 9 ? " " : "  ";
+            builder.append(i);
+            builder.append(space);
+            builder.append(carLst[i]);
+        }
+        return String.valueOf(builder);
+    }
 }
