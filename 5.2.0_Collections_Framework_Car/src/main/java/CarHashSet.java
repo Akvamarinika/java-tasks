@@ -1,4 +1,4 @@
-public class CarSet implements CarSetMethods {
+public class CarHashSet implements CarSetMethods {
     @Override
     public boolean add(Car car) {
         return false;
@@ -11,7 +11,7 @@ public class CarSet implements CarSetMethods {
 
     @Override
     public int size() {
-        return 0;
+        return 1;
     }
 
     @Override
