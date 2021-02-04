@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Car {
     private Enum<Brands> brand;
     private Enum<Colors> color;
@@ -22,4 +24,18 @@ public class Car {
         return String.format("Brand: %10s \t Color: %7s \t Number: %8s\n", brand, color, number);
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Car car = (Car) object;
+        return number == car.number &&
+                brand == car.brand &&
+                Objects.equals(color, car.color);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(brand, color, number);
+    }
 }

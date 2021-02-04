@@ -9,7 +9,7 @@ public class CarSetTest {
     @Before
     public void setUp()  {
         carSet = new CarHashSet();
-        assertTrue(carSet.add(new Car(Brands.BMW, Colors.BLACK,234567)));
+        assertTrue(carSet.add(new Car(Brands.BMW, Colors.BLACK,888888)));
         assertTrue(carSet.add(new Car(Brands.BMW, Colors.WHITE, 555555)));
         assertTrue(carSet.add(new Car(Brands.BMW, Colors.BLACK, 666666)));
         assertTrue(carSet.add(new Car(Brands.AUDI, Colors.ORANGE, 233232)));
@@ -18,12 +18,12 @@ public class CarSetTest {
             carSet.add(new Car());
         }
         System.out.println("Size: " + carSet.size());
-        System.out.println(carSet);
+
     }
 
     @Test
     public void whenAddSameElementsSizeIncreaseByOne() {
-        whenAddFiveDifferentElementsSizeEqualsFive();
+        whenAddFiveDifferentElementsSizeEquals100();
         Car car = new Car(Brands.ALFA_ROMEO, Colors.ORANGE, 123456);
         int expected = carSet.size();
         assertTrue(carSet.add(car));
@@ -36,18 +36,21 @@ public class CarSetTest {
     public void whenRemoveNotExistentElementReturnFalse() {
         Car car = new Car(Brands.ALFA_ROMEO, Colors.ORANGE, 123456);
         assertFalse(carSet.remove(car));
-        assertEquals(101, carSet.size());
+        assertEquals(100, carSet.size());
     }
 
     @Test
     public void remove() {
-        Car car = new Car(Brands.BMW, Colors.BLACK,234567);
-        assertTrue(carSet.remove(car));
+        System.out.println(carSet);
+        assertTrue(carSet.remove(new Car(Brands.BMW, Colors.BLACK,888888)));
         assertEquals(99, carSet.size());
+        assertFalse(carSet.remove(new Car(Brands.BMW, Colors.BLACK,888888)));
+        assertEquals(99, carSet.size());
+        System.out.println(carSet);
     }
 
     @Test
-    public void whenAddFiveDifferentElementsSizeEqualsFive() {
+    public void whenAddFiveDifferentElementsSizeEquals100() {
         assertEquals(100, carSet.size());
     }
 

@@ -1,27 +1,39 @@
 public class CarHashSet implements CarSetMethods {
     private int size = 0;
+    public static final double LOAD_FACTOR = 0.75;
     public static final int INIT_CAPACITY = 16;
     Entry[] entriesArr = new Entry[INIT_CAPACITY];
 
-    public int getPositionElem(Car car){
-        return Math.abs(car.hashCode() % entriesArr.length);
+    public int getPositionElem(Car car, int lenArr){
+        return Math.abs(car.hashCode() % lenArr);
     }
 
     @Override
     public boolean add(Car car) {
-        int position = getPositionElem(car);
-        if (entriesArr[position] == null){
-            entriesArr[position] = new Entry(car, null);
-            size++;
+        if (size >= (entriesArr.length * LOAD_FACTOR) ){
+            increaseArray();
+        }
+        boolean isAdded = add(car, entriesArr);
+        if (isAdded){
+          size++;
+        }
+        return isAdded;
+    }
+
+    public boolean add(Car car, Entry[] currentArray) {
+        int position = getPositionElem(car, currentArray.length);
+        if (currentArray[position] == null){
+            currentArray[position] = new Entry(car, null);
+            //size++;
             return true;
         } else {
-            Entry itemOnPosition = entriesArr[position];
+            Entry itemOnPosition = currentArray[position];
             while (true) {
                 if (itemOnPosition.element.equals(car)){
                     return false;
                 } else if (itemOnPosition.next == null){
                     itemOnPosition.next = new Entry(car, null);
-                    size++;
+                    //size++;
                     return true;
                 } else {
                     itemOnPosition = itemOnPosition.next;
@@ -30,25 +42,37 @@ public class CarHashSet implements CarSetMethods {
         }
     }
 
+    private void increaseArray(){
+        Entry[] newArray = new Entry[entriesArr.length * 2];
+        for (Entry entry : entriesArr){
+            Entry itemOnPosition = entry;
+            while (itemOnPosition != null){
+                add(itemOnPosition.element, newArray);
+                itemOnPosition = itemOnPosition.next;
+
+            }
+        }
+        entriesArr = newArray;
+    }
+
     @Override
     public boolean remove(Car car) {
-        int position = getPositionElem(car);
+        int position = getPositionElem(car, entriesArr.length);
         if (entriesArr[position] == null){
             return false;
         }
 
         Entry firstElemOnPosition = entriesArr[position];
         Entry secondElemOnPosition = entriesArr[position].next;
+        if (firstElemOnPosition.element.equals(car)){
+            entriesArr[position] = secondElemOnPosition;
+            size--;
+            return true;
+        }
 
         while (secondElemOnPosition != null) {
-            if (firstElemOnPosition.element.equals(car)){
-                entriesArr[position] = secondElemOnPosition;
-                size--;
-                return true;
-            }
-
             if (secondElemOnPosition.element.equals(car)){
-                entriesArr[position].next = secondElemOnPosition.next;
+                firstElemOnPosition.next = secondElemOnPosition.next;
                 size--;
                 return true;
             } else {
@@ -60,6 +84,16 @@ public class CarHashSet implements CarSetMethods {
         return false;
     }
 
+  /*  public void print(){
+        int i = 0;
+        for (Entry entry : entriesArr){
+            System.out.println(i + " " + entry);
+            i++;
+        }
+    }*/
+
+
+
     @Override
     public int size() {
         return size;
@@ -67,7 +101,7 @@ public class CarHashSet implements CarSetMethods {
 
     @Override
     public void clear() {
-        Entry[] entriesArr = new Entry[INIT_CAPACITY];
+        entriesArr = new Entry[INIT_CAPACITY];
         size = 0;
 
     }
@@ -81,4 +115,29 @@ public class CarHashSet implements CarSetMethods {
            this.next = entry;
        }
     }
+
+    @Override
+    public String toString() {
+        int i = 0;
+        StringBuilder builder = new StringBuilder(" ");
+        for (Entry entry : entriesArr){
+            if (entry != null){
+                builder.append(++i);
+                builder.append(" ");
+                builder.append(entry.element);
+                builder.append(" ");
+                Entry itemNext = entry.next;
+                while (itemNext != null){
+                    builder.append(++i);
+                    builder.append(" ");
+                    builder.append(itemNext.element);
+                    builder.append(" ");
+                    itemNext = itemNext.next;
+                }
+            }
+        }
+        return String.valueOf(builder);
+    }
+
+
 }
