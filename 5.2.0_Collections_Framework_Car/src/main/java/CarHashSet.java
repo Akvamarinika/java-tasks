@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 public class CarHashSet implements CarSetMethods{
     private int size = 0;
     public static final double LOAD_FACTOR = 0.75;
@@ -106,16 +108,6 @@ public class CarHashSet implements CarSetMethods{
 
     }
 
-   static class Entry{
-       private Car element;
-       private Entry next;
-
-       public Entry(Car car, Entry entry){
-           this.element = car;
-           this.next = entry;
-       }
-    }
-
     @Override
     public String toString() {
         int i = 0;
@@ -160,6 +152,51 @@ public class CarHashSet implements CarSetMethods{
 
         }
         return false;
-
     }
+
+    @Override
+    public Iterator<Car> iterator() {
+        return new Iterator<Car>() {
+            Entry entryItem;
+            int countItem = 0;
+            int indexArr = 0; // ищем заполненную ячейку массива
+
+            @Override
+            public boolean hasNext() {
+                return countItem < size;
+            }
+
+            @Override
+            public Car next() {
+                while (entriesArr[indexArr] == null){
+                    indexArr++;
+                }
+
+                if (entryItem == null){
+                    entryItem = entriesArr[indexArr];
+                }
+
+                Car car = entryItem.element;
+                entryItem = entryItem.next;
+
+                if (entryItem == null){
+                    indexArr++;
+                }
+
+                countItem++;
+                return car;
+            }
+        };
+    }
+
+    static class Entry{
+        private Car element;
+        private Entry next;
+
+        public Entry(Car car, Entry entry){
+            this.element = car;
+            this.next = entry;
+        }
+    }
+
 }

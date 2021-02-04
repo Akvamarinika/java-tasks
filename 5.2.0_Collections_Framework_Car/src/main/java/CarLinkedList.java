@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 public class CarLinkedList implements CarListMethods{
     private Node first = null;
     private Node last = null;
@@ -115,18 +117,6 @@ public class CarLinkedList implements CarListMethods{
         return String.valueOf(builder);
     }
 
-    static class Node{
-        Node previous;
-        Car value;
-        Node next;
-
-        Node(Node previous, Car value, Node next){
-            this.previous = previous;
-            this.value = value;
-            this.next = next;
-        }
-    }
-
     @Override
     public boolean contains(Car car) {
         return findIndex(car) != -1;
@@ -141,6 +131,37 @@ public class CarLinkedList implements CarListMethods{
             node = node.next;
         }
         return -1;
+    }
+
+    @Override
+    public Iterator<Car> iterator() {
+        return new Iterator<Car>() {
+            Node node = first;
+
+            @Override
+            public boolean hasNext() {
+                return node != null;
+            }
+
+            @Override
+            public Car next() {
+                Car car = node.value;
+                node = node.next;
+                return car;
+            }
+        };
+    }
+
+    static class Node{
+        Node previous;
+        Car value;
+        Node next;
+
+        Node(Node previous, Car value, Node next){
+            this.previous = previous;
+            this.value = value;
+            this.next = next;
+        }
     }
 }
 

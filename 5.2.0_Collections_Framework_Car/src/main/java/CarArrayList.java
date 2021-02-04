@@ -1,5 +1,6 @@
 
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class CarArrayList implements CarListMethods{
     private Car[] carLst = new Car[10];
@@ -96,4 +97,20 @@ public class CarArrayList implements CarListMethods{
         return false;
     }
 
+    @Override
+    public Iterator<Car> iterator() {
+        return new Iterator<Car>() {
+            int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < size ;
+            }
+
+            @Override
+            public Car next() {
+                return carLst[index++];
+            }
+        };
+    }
 }
