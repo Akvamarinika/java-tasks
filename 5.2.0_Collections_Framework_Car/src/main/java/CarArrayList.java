@@ -88,6 +88,11 @@ public class CarArrayList implements CarListMethods{
 
     @Override
     public boolean contains(Car car) {
+        for (int i = 0; i < size; i++){
+            if (carLst[i].equals(car)){
+                return true;
+            }
+        }
         return false;
     }
 
