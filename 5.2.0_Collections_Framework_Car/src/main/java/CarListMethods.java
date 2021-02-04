@@ -1,9 +1,9 @@
-public interface CarListMethods {
+public interface CarListMethods extends CollectionMethods {
     Car get(int index);
-    void add(Car car);
-    void add(Car car, int index);
-    boolean remove(Car car);
+    //boolean add(Car car);
+    boolean add(Car car, int index);
+   // boolean remove(Car car);
     boolean removeAt(int index);
-    int size();
-    void clear();
+   // int size();
+    //void clear();
 }

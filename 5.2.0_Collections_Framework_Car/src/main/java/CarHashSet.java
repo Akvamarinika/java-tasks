@@ -1,4 +1,4 @@
-public class CarHashSet implements CarSetMethods {
+public class CarHashSet implements CarSetMethods{
     private int size = 0;
     public static final double LOAD_FACTOR = 0.75;
     public static final int INIT_CAPACITY = 16;
@@ -139,5 +139,27 @@ public class CarHashSet implements CarSetMethods {
         return String.valueOf(builder);
     }
 
+    @Override
+    public boolean contains(Car car) {
+        int position = getPositionElem(car, entriesArr.length);
+        if (entriesArr[position] == null){
+            return false;
+        } else{
+            Entry firstElemOnPosition = entriesArr[position];
+            Entry secondElemOnPosition = entriesArr[position].next;
+            if (firstElemOnPosition.element.equals(car)){
+                return true;
+            }
+            while (secondElemOnPosition != null){
+                if(secondElemOnPosition.element.equals(car)){
+                    return true;
+                } else {
+                    secondElemOnPosition = secondElemOnPosition.next;
+                }
+            }
 
+        }
+        return false;
+
+    }
 }

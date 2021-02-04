@@ -1,7 +1,7 @@
 
 import java.util.Arrays;
 
-public class CarArrayList implements CarListMethods {
+public class CarArrayList implements CarListMethods{
     private Car[] carLst = new Car[10];
     private int size = 0;
 
@@ -12,20 +12,22 @@ public class CarArrayList implements CarListMethods {
     }
 
     @Override
-    public void add(Car car) {
+    public boolean add(Car car) {
         listEnlargement();
         carLst[size] = car;
         size++;
+        return true;
     }
 
     @Override
-    public void add(Car car, int index) {
+    public boolean add(Car car, int index) {
         checkIndex(index);
         listEnlargement();
         if (size - index >= 0){
             System.arraycopy(carLst, index, carLst, index+1, size - index);
         }
         size++;
+        return true;
     }
 
     @Override
@@ -83,4 +85,10 @@ public class CarArrayList implements CarListMethods {
         }
         return String.valueOf(builder);
     }
+
+    @Override
+    public boolean contains(Car car) {
+        return false;
+    }
+
 }

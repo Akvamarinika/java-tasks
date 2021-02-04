@@ -83,5 +83,19 @@ public class CarArrayListTest {
         assertEquals(0, carList.size());
     }
 
+    @Test
+    public void whenInCollectionHasElementReturnTrue(){
+        Car car = new Car(Brands.CADILLAC, Colors.CHERRY, 666666);
+        carList.add(car);
+        assertEquals(101, carList.size());
+        assertTrue(carList.contains(car));
+    }
+
+    @Test
+    public void whenInCollectionNoElementReturnFalse(){
+        Car car = new Car(Brands.CADILLAC, Colors.CHERRY, 666666);
+        assertFalse(carList.contains(car));
+    }
+
 
 }

@@ -1,6 +1,6 @@
-public interface CarSetMethods {
-    boolean add(Car car);
+public interface CarSetMethods extends CollectionMethods {
+   /* boolean add(Car car);
     boolean remove(Car car);
     int size();
-    void clear();
+    void clear();*/
 }

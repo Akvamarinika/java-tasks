@@ -1,4 +1,4 @@
-public class CarLinkedList implements CarListMethods {
+public class CarLinkedList implements CarListMethods{
     private Node first = null;
     private Node last = null;
     private int size = 0;
@@ -24,7 +24,7 @@ public class CarLinkedList implements CarListMethods {
     }
 
     @Override
-    public void add(Car car) {
+    public boolean add(Car car) {
         if(first == null){
             first = new Node(null, car, null);
             last = first;
@@ -34,14 +34,15 @@ public class CarLinkedList implements CarListMethods {
             prevTmpElem.next = last;
         }
         size++;
+        return true;
 
     }
 
     @Override
-    public void add(Car car, int index) {
+    public boolean add(Car car, int index) {
         checkIndex(index);
         if (index == size){
-            add(car);
+           return add(car);
         } else {
             Node nodeNext = getNode(index);
             Node nodePrevious = getNode(index).previous;
@@ -55,6 +56,7 @@ public class CarLinkedList implements CarListMethods {
             }
         }
         size++;
+        return true;
     }
 
     @Override
@@ -128,6 +130,9 @@ public class CarLinkedList implements CarListMethods {
         }
     }
 
-
+    @Override
+    public boolean contains(Car car) {
+        return false;
+    }
 }
 

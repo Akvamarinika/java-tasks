@@ -59,4 +59,18 @@ public class CarSetTest {
         carSet.clear();
         assertEquals(0, carSet.size());
     }
+
+    @Test
+    public void whenInCollectionHasElementReturnTrue(){
+        Car car = new Car(Brands.BMW, Colors.BLACK, 666666);
+        assertEquals(100, carSet.size());
+        assertTrue(carSet.contains(car));
+    }
+
+    @Test
+    public void whenInCollectionNoElementReturnFalse(){
+        Car car = new Car(Brands.ALFA_ROMEO, Colors.ORANGE, 123456);
+        assertFalse(carSet.contains(car));
+    }
+
 }
