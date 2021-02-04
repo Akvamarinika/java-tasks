@@ -58,6 +58,15 @@ public class CarLinkedListTest {
     }
 
     @Test
+    public void whenRemovedNEWCarObjectInListMustSizeBe100AndReturnTrue() {
+        carList.add(new Car(Brands.CADILLAC, Colors.CHERRY, 666666));
+        System.out.println(carList.size());
+        assertTrue(carList.remove(new Car(Brands.CADILLAC, Colors.CHERRY, 666666)));
+        assertEquals(100, carList.size());
+        System.out.println(carList.size());
+    }
+
+    @Test
     public void whenRemovedNonExistentItemInListReturnFalse() {
         Car car = new Car(Brands.CADILLAC, Colors.CHERRY, 666666);
         assertFalse(carList.remove(car));

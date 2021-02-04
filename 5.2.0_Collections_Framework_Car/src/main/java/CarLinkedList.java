@@ -132,6 +132,13 @@ public class CarLinkedList implements CarListMethods{
 
     @Override
     public boolean contains(Car car) {
+        Node node = first;
+        for (int i = 0; i < size; i++){
+            if (node.value.equals(car)){
+                return true;
+            }
+            node = node.next;
+        }
         return false;
     }
 }
