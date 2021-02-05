@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Car {
+public class Car implements Comparable<Car>{
     private Enum<Brands> brand;
     private Enum<Colors> color;
     private int number;
@@ -16,7 +16,19 @@ public class Car {
         int rndColorIndex = (int)Math.round(Math.random() * (Colors.values().length-1));
         this.brand = Brands.values()[rndBrandIndex];
         this.color = Colors.values()[rndColorIndex];
-        this.number = (int) Math.round(Math.random() * 999999 + 100000);
+        this.number = (int) Math.round(Math.random() * 9999999 + 100000);
+    }
+
+    public Enum<Brands> getBrand() {
+        return brand;
+    }
+
+    public Enum<Colors> getColor() {
+        return color;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     @Override
@@ -37,5 +49,18 @@ public class Car {
     @Override
     public int hashCode() {
         return Objects.hash(brand, color, number);
+    }
+
+    @Override
+    public int compareTo(Car car) {
+        int result = this.brand.toString().compareTo(car.brand.toString());
+        if (result == 0){
+            result = this.color.toString().compareTo(car.color.toString());
+        }
+        if (result == 0){
+            result = this.number - car.number;
+        }
+
+        return result;
     }
 }

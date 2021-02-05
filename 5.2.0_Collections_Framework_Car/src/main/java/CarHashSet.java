@@ -178,7 +178,6 @@ public class CarHashSet implements CarSetMethods{
 
                 Car car = entryItem.element;
                 entryItem = entryItem.next;
-
                 if (entryItem == null){
                     indexArr++;
                 }

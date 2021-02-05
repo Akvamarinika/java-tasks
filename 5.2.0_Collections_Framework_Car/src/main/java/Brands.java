@@ -10,5 +10,7 @@ public enum Brands {
     BMW,
     ACURA,
     CADILLAC,
-    ALFA_ROMEO
+    ALFA_ROMEO;
+
+
 }
