@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class CarOwner {
     int id;
     String name;
@@ -31,5 +33,20 @@ public class CarOwner {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        CarOwner owner = (CarOwner) object;
+        return id == owner.id &&
+                Objects.equals(name, owner.name) &&
+                Objects.equals(surname, owner.surname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname);
     }
 }

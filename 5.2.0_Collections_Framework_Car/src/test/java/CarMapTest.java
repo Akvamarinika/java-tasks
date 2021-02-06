@@ -39,7 +39,7 @@ public class CarMapTest {
         Car car;
         for (int i = 0; i < 100; i++){
             int idx = i % 10;
-            owner = new CarOwner(i, "Ivan" + idx, "Ivanov" + idx);
+            owner = new CarOwner(idx, "Ivan" + idx, "Ivanov" + idx);
             car = new Car();
             ownersCars.put(owner, car);
         }
@@ -48,8 +48,9 @@ public class CarMapTest {
 
     @Test
     public void whenPutElementHasKeyValueReplacedWithNewOne() {
+        whenPut100ElementCollectionThenSizeBecome100();
         assertEquals(100, ownersCars.size());
-        CarOwner owner = new CarOwner(99, "Ivan", "Ivanov");
+        CarOwner owner = new CarOwner(99, "Ivan99", "Ivanov99");
         Car car = new Car();
         System.out.println(ownersCars.get(owner));
 
