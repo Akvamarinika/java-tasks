@@ -114,22 +114,26 @@ public class CarHashMap implements CarMap {
         int position = getPosition(key, entriesKV.length);
 
         Entry entryOnPositionFirst = entriesKV[position];
-        Entry entryOnPositionSecond = entriesKV[position].next;
         if (entryOnPositionFirst != null && entryOnPositionFirst.key.equals(key)){
-            entriesKV[position] = entryOnPositionSecond;
+            entriesKV[position] = entryOnPositionFirst.next;
             size--;
             return true;
         }
 
-        while (entryOnPositionSecond != null) {
+        while (entryOnPositionFirst != null) {
+            Entry entryOnPositionSecond = entriesKV[position].next;
+            if (entryOnPositionSecond == null) {
+                return false;
+            }
+
             if (entryOnPositionSecond.key.equals(key)) {
                 entryOnPositionFirst.next = entryOnPositionSecond.next;
                 size--;
                 return true;
-            } else {
-                entryOnPositionFirst = entryOnPositionSecond;
-                entryOnPositionSecond = entryOnPositionSecond.next;
             }
+                entryOnPositionFirst = entryOnPositionFirst.next;
+                //entryOnPositionSecond = entryOnPositionSecond.next;
+
 
         }
         return false;
