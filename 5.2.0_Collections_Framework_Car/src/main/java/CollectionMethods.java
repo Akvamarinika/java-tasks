@@ -1,7 +1,7 @@
-public interface CollectionMethods extends Iterable<Car> {
-    boolean add(Car car);
-    boolean remove(Car car);
+public interface CollectionMethods<T> extends Iterable<T> {
+    boolean add(T car);
+    boolean remove(T car);
     int size();
     void clear();
-    boolean contains(Car car);
+    boolean contains(T car);
 }

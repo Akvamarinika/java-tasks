@@ -4,11 +4,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class CollectionMethodsTest {
-    private CollectionMethods carList;
+    private CollectionMethods<Car> carList;
 
     @Before
-    public void setUp() throws Exception {
-        carList = new CarHashSet();
+    public void setUp() {
+        carList = new CarHashSet<>();
         for (int i = 0; i < 100; i++){
             carList.add(new Car());
         }

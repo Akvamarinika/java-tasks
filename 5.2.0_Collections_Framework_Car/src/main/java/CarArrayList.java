@@ -2,18 +2,18 @@
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class CarArrayList implements CarListMethods{
-    private Car[] carLst = new Car[10];
+public class CarArrayList<T> implements CarListMethods<T>{
+    private Object[] carLst = new Object[10];
     private int size = 0;
 
     @Override
-    public Car get(int index) {
+    public T get(int index) {
         checkIndex(index);
-        return carLst[index];
+        return (T) carLst[index];
     }
 
     @Override
-    public boolean add(Car car) {
+    public boolean add(T car) {
         listEnlargement();
         carLst[size] = car;
         size++;
@@ -21,7 +21,7 @@ public class CarArrayList implements CarListMethods{
     }
 
     @Override
-    public boolean add(Car car, int index) {
+    public boolean add(T car, int index) {
         checkIndex(index);
         listEnlargement();
         if (size - index >= 0){
@@ -32,7 +32,7 @@ public class CarArrayList implements CarListMethods{
     }
 
     @Override
-    public boolean remove(Car car) {
+    public boolean remove(T car) {
         for (int i = 0; i < size; i++){
             if (car.equals(carLst[i])){
                 return removeAt(i);
@@ -58,7 +58,7 @@ public class CarArrayList implements CarListMethods{
 
     @Override
     public void clear() {
-        carLst = new Car[10];
+        carLst = new Object[10];
         size = 0;
     }
 
@@ -88,7 +88,7 @@ public class CarArrayList implements CarListMethods{
     }
 
     @Override
-    public boolean contains(Car car) {
+    public boolean contains(T car) {
         for (int i = 0; i < size; i++){
             if (carLst[i].equals(car)){
                 return true;
@@ -98,8 +98,8 @@ public class CarArrayList implements CarListMethods{
     }
 
     @Override
-    public Iterator<Car> iterator() {
-        return new Iterator<Car>() {
+    public Iterator<T> iterator() {
+        return new Iterator<>() {
             int index = 0;
 
             @Override
@@ -108,8 +108,8 @@ public class CarArrayList implements CarListMethods{
             }
 
             @Override
-            public Car next() {
-                return carLst[index++];
+            public T next() {
+                return (T) carLst[index++];
             }
         };
     }

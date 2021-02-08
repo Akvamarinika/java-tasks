@@ -4,11 +4,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class CarSetTest {
-   private CarHashSet carSet;
+   private CarHashSet<Car> carSet;
 
     @Before
     public void setUp()  {
-        carSet = new CarHashSet();
+        carSet = new CarHashSet<>();
         assertTrue(carSet.add(new Car(Brands.BMW, Colors.BLACK,888888)));
         assertTrue(carSet.add(new Car(Brands.BMW, Colors.WHITE, 555555)));
         assertTrue(carSet.add(new Car(Brands.BMW, Colors.BLACK, 666666)));

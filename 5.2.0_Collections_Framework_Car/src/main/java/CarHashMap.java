@@ -3,16 +3,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class CarHashMap implements CarMap {
+public class CarHashMap<K, V> implements CarMap<K, V> {
     private static final double LOAD_FACTOR = 0.75;
     private static final int INITIAL_CAPACITY = 16;
-    Entry[] entriesKV = new Entry[INITIAL_CAPACITY];
+    Object[] entriesKV = new Object[INITIAL_CAPACITY];
     int size = 0;
 
     private void increaseArray(){
-        Entry[] entriesNew = new Entry[entriesKV.length * 2];
-        for (Entry entry : entriesKV){
-            Entry linkedEntry = entry;
+        Object[] entriesNew = new Object[entriesKV.length * 2];
+        for (Object entry : entriesKV){
+            Entry linkedEntry = (Entry) entry;
             while (linkedEntry != null){
                 put(linkedEntry.key, linkedEntry.value, entriesNew);
                 linkedEntry = linkedEntry.next;
@@ -21,13 +21,13 @@ public class CarHashMap implements CarMap {
         entriesKV = entriesNew;
     }
 
-    private int getPosition(CarOwner carOwner, int lengthArray){
+    private int getPosition(K carOwner, int lengthArray){
         return Math.abs((carOwner.hashCode() % lengthArray));
     }
 
-    private boolean put(CarOwner key, Car value, Entry[] entriesArray){
+    private boolean put(K key, V value, Object[] entriesArray){
         int position = getPosition(key, entriesArray.length);
-        Entry entryOnPosition = entriesArray[position];
+        Entry entryOnPosition = (Entry) entriesArray[position];
         if (entryOnPosition == null){
             entriesArray[position] = new Entry(key, value, null);
             // size++;
@@ -55,7 +55,7 @@ public class CarHashMap implements CarMap {
     }
 
     @Override
-    public void put(CarOwner key, Car value) {
+    public void put(K key, V value) {
         if (size >= (entriesKV.length * LOAD_FACTOR)){
             increaseArray();
         }
@@ -69,9 +69,9 @@ public class CarHashMap implements CarMap {
     }
 
     @Override
-    public Car get(CarOwner key) {
+    public V get(K key) {
         int position = getPosition(key, entriesKV.length);
-        Entry entryOnPosition = entriesKV[position];
+        Entry entryOnPosition = (Entry) entriesKV[position];
         while (entryOnPosition != null) {
             if (entryOnPosition.key.equals(key)){
                 return entryOnPosition.value;
@@ -82,10 +82,10 @@ public class CarHashMap implements CarMap {
     }
 
     @Override
-    public Set<CarOwner> keySet() {
-        Set<CarOwner> keys = new HashSet<>();
-        for (Entry entry : entriesKV){
-            Entry linkedEntry = entry;
+    public Set<K> keySet() {
+        Set<K> keys = new HashSet<>();
+        for (Object entry : entriesKV){
+            Entry linkedEntry = (Entry) entry;
 
             while (linkedEntry != null){
                 keys.add(linkedEntry.key);
@@ -96,10 +96,10 @@ public class CarHashMap implements CarMap {
     }
 
     @Override
-    public List<Car> values() {
-        List<Car> values = new ArrayList<>();
-        for (Entry entry : entriesKV){
-            Entry linkedEntry = entry;
+    public List<V> values() {
+        List<V> values = new ArrayList<>();
+        for (Object entry : entriesKV){
+            Entry linkedEntry = (Entry) entry;
 
             while (linkedEntry != null){
                 values.add(linkedEntry.value);
@@ -110,10 +110,10 @@ public class CarHashMap implements CarMap {
     }
 
     @Override
-    public boolean remove(CarOwner key) {
+    public boolean remove(K key) {
         int position = getPosition(key, entriesKV.length);
 
-        Entry entryOnPositionFirst = entriesKV[position];
+        Entry entryOnPositionFirst = (Entry) entriesKV[position];
         if (entryOnPositionFirst != null && entryOnPositionFirst.key.equals(key)){
             entriesKV[position] = entryOnPositionFirst.next;
             size--;
@@ -121,7 +121,7 @@ public class CarHashMap implements CarMap {
         }
 
         while (entryOnPositionFirst != null) {
-            Entry entryOnPositionSecond = entriesKV[position].next;
+            Entry entryOnPositionSecond =  entryOnPositionFirst.next;
             if (entryOnPositionSecond == null) {
                 return false;
             }
@@ -146,15 +146,15 @@ public class CarHashMap implements CarMap {
 
     @Override
     public void clear() {
-        entriesKV = new Entry[INITIAL_CAPACITY];
+        entriesKV = new Object[INITIAL_CAPACITY];
         size = 0;
     }
 
-    static class Entry{
-        private final CarOwner key;
-        private Car value;
+    class Entry{
+        private final K key;
+        private V value;
         private Entry next;
-        Entry(CarOwner key, Car value, Entry next){
+        Entry(K key, V value, Entry next){
             this.key = key;
             this.value = value;
             this.next = next;

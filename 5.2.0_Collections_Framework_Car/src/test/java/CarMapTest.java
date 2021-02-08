@@ -4,11 +4,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class CarMapTest {
-    private CarMap ownersCars;
+    private CarMap<CarOwner, Car> ownersCars;
 
     @Before
     public void setUp()  {
-        ownersCars = new CarHashMap();
+        ownersCars = new CarHashMap<>();
 
     }
 

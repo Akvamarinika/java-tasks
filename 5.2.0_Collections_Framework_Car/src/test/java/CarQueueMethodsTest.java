@@ -5,11 +5,11 @@ import static org.junit.Assert.*;
 
 public class CarQueueMethodsTest {
 
-    CarLinkedList queue;
+    CarLinkedList<Car> queue;
 
     @Before
     public void setUp() {
-        queue = new CarLinkedList();
+        queue = new CarLinkedList<>();
         for(int i = 0; i < 15; i++){
             queue.add(new Car(Brands.ACURA, Colors.RED, 100000 + i));
         }

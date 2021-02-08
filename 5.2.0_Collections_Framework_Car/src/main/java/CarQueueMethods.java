@@ -1,5 +1,5 @@
-public interface CarQueueMethods extends CollectionMethods{
-    boolean add(Car car);
-    Car peek();
-    Car poll();
+public interface CarQueueMethods<T> extends CollectionMethods<T>{
+    boolean add(T car);
+    T peek();
+    T poll();
 }

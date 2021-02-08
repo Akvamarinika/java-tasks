@@ -1,7 +1,7 @@
-public interface CarListMethods extends CollectionMethods {
-    Car get(int index);
+public interface CarListMethods<T> extends CollectionMethods<T> {
+    T get(int index);
     //boolean add(Car car);
-    boolean add(Car car, int index);
+    boolean add(T car, int index);
    // boolean remove(Car car);
     boolean removeAt(int index);
    // int size();

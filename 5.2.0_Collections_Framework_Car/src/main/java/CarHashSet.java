@@ -1,17 +1,17 @@
 import java.util.Iterator;
 
-public class CarHashSet implements CarSetMethods{
+public class CarHashSet<T> implements CarSetMethods<T>{
     private int size = 0;
     public static final double LOAD_FACTOR = 0.75;
     public static final int INIT_CAPACITY = 16;
-    Entry[] entriesArr = new Entry[INIT_CAPACITY];
+    Object[] entriesArr = new Object[INIT_CAPACITY];
 
-    public int getPositionElem(Car car, int lenArr){
+    public int getPositionElem(T car, int lenArr){
         return Math.abs(car.hashCode() % lenArr);
     }
 
     @Override
-    public boolean add(Car car) {
+    public boolean add(T car) {
         if (size >= (entriesArr.length * LOAD_FACTOR) ){
             increaseArray();
         }
@@ -22,14 +22,14 @@ public class CarHashSet implements CarSetMethods{
         return isAdded;
     }
 
-    public boolean add(Car car, Entry[] currentArray) {
+    public boolean add(T car, Object[] currentArray) {
         int position = getPositionElem(car, currentArray.length);
         if (currentArray[position] == null){
             currentArray[position] = new Entry(car, null);
             //size++;
             return true;
         } else {
-            Entry itemOnPosition = currentArray[position];
+            Entry itemOnPosition = (Entry)currentArray[position];
             while (true) {
                 if (itemOnPosition.element.equals(car)){
                     return false;
@@ -45,9 +45,9 @@ public class CarHashSet implements CarSetMethods{
     }
 
     private void increaseArray(){
-        Entry[] newArray = new Entry[entriesArr.length * 2];
-        for (Entry entry : entriesArr){
-            Entry itemOnPosition = entry;
+        Object[] newArray = new Object[entriesArr.length * 2];
+        for (Object entry : entriesArr){
+            Entry itemOnPosition = (Entry)entry;
             while (itemOnPosition != null){
                 add(itemOnPosition.element, newArray);
                 itemOnPosition = itemOnPosition.next;
@@ -58,14 +58,14 @@ public class CarHashSet implements CarSetMethods{
     }
 
     @Override
-    public boolean remove(Car car) {
+    public boolean remove(T car) {
         int position = getPositionElem(car, entriesArr.length);
         if (entriesArr[position] == null){
             return false;
         }
 
-        Entry firstElemOnPosition = entriesArr[position];
-        Entry secondElemOnPosition = entriesArr[position].next;
+        Entry firstElemOnPosition = (Entry)entriesArr[position];
+        Entry secondElemOnPosition = ((Entry)entriesArr[position]).next;
         if (firstElemOnPosition.element.equals(car)){
             entriesArr[position] = secondElemOnPosition;
             size--;
@@ -103,7 +103,7 @@ public class CarHashSet implements CarSetMethods{
 
     @Override
     public void clear() {
-        entriesArr = new Entry[INIT_CAPACITY];
+        entriesArr = new Object[INIT_CAPACITY];
         size = 0;
 
     }
@@ -112,7 +112,8 @@ public class CarHashSet implements CarSetMethods{
     public String toString() {
         int i = 0;
         StringBuilder builder = new StringBuilder(" ");
-        for (Entry entry : entriesArr){
+        for (Object entry1 : entriesArr){
+            Entry entry = (Entry) entry1;
             if (entry != null){
                 builder.append(++i);
                 builder.append(" ");
@@ -132,13 +133,13 @@ public class CarHashSet implements CarSetMethods{
     }
 
     @Override
-    public boolean contains(Car car) {
+    public boolean contains(T car) {
         int position = getPositionElem(car, entriesArr.length);
         if (entriesArr[position] == null){
             return false;
         } else{
-            Entry firstElemOnPosition = entriesArr[position];
-            Entry secondElemOnPosition = entriesArr[position].next;
+            Entry firstElemOnPosition = (Entry)entriesArr[position];
+            Entry secondElemOnPosition = ((Entry)entriesArr[position]).next;
             if (firstElemOnPosition.element.equals(car)){
                 return true;
             }
@@ -155,8 +156,8 @@ public class CarHashSet implements CarSetMethods{
     }
 
     @Override
-    public Iterator<Car> iterator() {
-        return new Iterator<Car>() {
+    public Iterator<T> iterator() {
+        return new Iterator<>() {
             Entry entryItem;
             int countItem = 0;
             int indexArr = 0; // ищем заполненную ячейку массива
@@ -167,16 +168,16 @@ public class CarHashSet implements CarSetMethods{
             }
 
             @Override
-            public Car next() {
+            public T next() {
                 while (entriesArr[indexArr] == null){
                     indexArr++;
                 }
 
                 if (entryItem == null){
-                    entryItem = entriesArr[indexArr];
+                    entryItem = (Entry)entriesArr[indexArr];
                 }
 
-                Car car = entryItem.element;
+                T car = entryItem.element;
                 entryItem = entryItem.next;
                 if (entryItem == null){
                     indexArr++;
@@ -188,11 +189,11 @@ public class CarHashSet implements CarSetMethods{
         };
     }
 
-    static class Entry{
-        private Car element;
+     class Entry{
+        private T element;
         private Entry next;
 
-        public Entry(Car car, Entry entry){
+        public Entry(T car, Entry entry){
             this.element = car;
             this.next = entry;
         }

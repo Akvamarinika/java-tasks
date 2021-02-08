@@ -1,4 +1,4 @@
-public interface CarSetMethods extends CollectionMethods {
+public interface CarSetMethods<T> extends CollectionMethods<T> {
    /* boolean add(Car car);
     boolean remove(Car car);
     int size();
