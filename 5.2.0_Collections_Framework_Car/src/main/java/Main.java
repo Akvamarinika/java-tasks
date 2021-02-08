@@ -1,10 +1,8 @@
-import java.util.TreeSet;
-import java.util.Set;
-import java.util.Comparator;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args){
-        Set<Car> cars = new TreeSet<>(new Comparator<Car>(){
+        Set<Car> cars = new TreeSet<>(new Comparator<>(){
             @Override
             public int compare(Car car1, Car car2) {
                 return -car1.getBrand().toString().compareTo(car2.getBrand().toString());
@@ -21,4 +19,5 @@ public class Main {
         }
         System.out.println(cars.size());
     }
+
 }

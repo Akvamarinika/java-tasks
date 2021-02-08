@@ -42,7 +42,9 @@ public class CarLinkedList implements CarListMethods, CarQueueMethods{
 
     @Override
     public boolean add(Car car, int index) {
-        checkIndex(index);
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException();
+        }
         if (index == size){
            return add(car);
         } else {
@@ -135,7 +137,7 @@ public class CarLinkedList implements CarListMethods, CarQueueMethods{
 
     @Override
     public Iterator<Car> iterator() {
-        return new Iterator<Car>() {
+        return new Iterator<>() {
             Node node = first;
 
             @Override
@@ -159,8 +161,9 @@ public class CarLinkedList implements CarListMethods, CarQueueMethods{
 
     @Override
     public Car poll() {
+        Car car = get(0);
         removeAt(0);
-        return get(0);
+        return car;
     }
 
     static class Node{
