@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Box<T extends Number & Comparable<T> >{
     T[] array;
     Box(T... args){
@@ -18,6 +20,12 @@ public class Box<T extends Number & Comparable<T> >{
 
     public int compare(Box<?> other){
         return (int) (this.avg() - other.avg());
+    }
+
+    public static <E> List<E> transfer(List<E> lst, List<E> dst){
+        dst.addAll(lst);
+        lst.clear();
+        return dst;
     }
 
 
