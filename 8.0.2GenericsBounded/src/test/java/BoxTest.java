@@ -36,4 +36,40 @@ public class BoxTest {
         assertTrue(dst.containsAll(lst));
 
     }
+
+    @Test
+    public void testCopyObjectsInList() {
+        List<Product> lst = new ArrayList<>();
+        FlashDrive flashDrive  = new FlashDrive("flash2", 50, 1200, 64);
+        lst.add(flashDrive);
+        lst.add(new FlashDrive("flash", 10, 750, 32));
+        lst.add(new Keyboard("Razer", 5, 6500, true, false, true));
+        lst.add(new Mouse("Bloody", 15, 2500, true, 5500, 8));
+        List<Product> dst = new ArrayList<>();
+        Box.transfer(lst,dst);
+        assertTrue(dst.containsAll(lst));
+
+    }
+
+    @Test
+    public void testCopyFlashInList() {
+        List<FlashDrive> lst = new ArrayList<>();
+        lst.add(new FlashDrive("flash", 10, 750, 32));
+        lst.add(new FlashDrive("flash2", 50, 1200, 64));
+        lst.add(new FlashDrive("flash3", 100, 350, 8));
+        lst.add(new FlashDrive("flash4", 30, 320, 4));
+        lst.add(new FlashDrive("flash5", 20, 550, 16));
+        List<FlashDrive> dst = new ArrayList<>();
+        Box.copy(lst,dst);
+        assertTrue(dst.containsAll(lst));
+
+        List<Product> dst2 = new ArrayList<>();
+        List<Product> src = new ArrayList<>();
+        src.add(new FlashDrive("flash", 10, 750, 32));
+        src.add(new Keyboard("Razer", 5, 6500, true, false, true));
+        src.add(new Mouse("Bloody", 15, 2500, true, 5500, 8));
+        Box.copy(src,dst2);
+        assertTrue(dst.containsAll(lst));
+
+    }
 }
