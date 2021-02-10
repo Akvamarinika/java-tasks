@@ -28,7 +28,7 @@ public class Box<T extends Number & Comparable<T> >{
         return dst;
     }
 
-    public static <E extends Product> void copy(List<E> lst, List<E> dst){
+    public static <E> void copy(List<? extends E> lst, List<? super E> dst){
         for (E product : lst){
             dst.add(product);
         }

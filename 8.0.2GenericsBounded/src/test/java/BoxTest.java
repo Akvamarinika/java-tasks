@@ -59,7 +59,7 @@ public class BoxTest {
         lst.add(new FlashDrive("flash3", 100, 350, 8));
         lst.add(new FlashDrive("flash4", 30, 320, 4));
         lst.add(new FlashDrive("flash5", 20, 550, 16));
-        List<FlashDrive> dst = new ArrayList<>();
+        List<Product> dst = new ArrayList<>();
         Box.copy(lst,dst);
         assertTrue(dst.containsAll(lst));
 
