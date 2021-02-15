@@ -10,9 +10,7 @@ public class Main {
 
             @Override
             public void run() {
-                synchronized (atm){
                     atm.withdrawMoney(this.getName(), 50000);
-                }
 
             }
         });
@@ -29,9 +27,7 @@ public class Main {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }*/
-                synchronized (atm){
                   atm.withdrawMoney(this.getName(), 80000);
-                }
 
             }
         });
@@ -49,11 +45,7 @@ public class Main {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }*/
-                synchronized (atm){
                     atm.withdrawMoney(this.getName(), 50000);
-                }
-
-
             }
         });
 
