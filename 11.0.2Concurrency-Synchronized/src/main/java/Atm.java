@@ -14,7 +14,8 @@ public class Atm {
             e.printStackTrace();
         }
         if (balance >= amount){
-            System.out.println(name + " вывел " + amount + " руб.");
+            balance -= amount;
+            System.out.println(name + " вывел " + amount + " руб. В банкомате осталось " + balance + " руб.");
         } else {
             System.out.println("В банкомате недостаточно денег для " + name);
         }
