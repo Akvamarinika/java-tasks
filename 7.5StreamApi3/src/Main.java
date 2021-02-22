@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -38,6 +39,11 @@ public class Main {
                 .limit(3)
                 .map(User::getName)
                 .forEach(System.out::println);
+
+        Optional<User> userL = users.stream()
+                .filter(user -> user.getName().startsWith("L"))
+                .findFirst();
+        userL.ifPresentOrElse(System.out::println, () -> System.out.println("User not found"));
 
 
     }
