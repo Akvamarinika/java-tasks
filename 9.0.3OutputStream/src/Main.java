@@ -8,7 +8,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String name = scanner.nextLine();
         while (!name.equals("exit")){
-            writeInFile("\n" + name, file);
+            writeInFile(name, file);
             name = scanner.nextLine();
         }
         readFromFile(file);
@@ -16,8 +16,10 @@ public class Main {
     }
 
     private static void writeInFile(String name, File fileName){
-        try(OutputStream out = new FileOutputStream(fileName, true)){
-            out.write(name.getBytes());
+        try(OutputStream bufferOut = new BufferedOutputStream(new FileOutputStream(fileName, true))){
+            bufferOut.write(name.getBytes());
+            bufferOut.write("\n".getBytes());
+            bufferOut.flush();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -26,10 +28,11 @@ public class Main {
     private static void readFromFile(File fileName){
         try(InputStream bufferIn = new BufferedInputStream(new FileInputStream(fileName))) {
             StringBuilder builder = new StringBuilder();
-            int count = bufferIn.read();
-            while (count != -1){
-                builder.append((char) count);
-                count = bufferIn.read();
+            byte array[] = new byte[128];
+            int count = bufferIn.read(array);
+            while (count > 0){
+                builder.append(new String(array, 0, count));
+                count = bufferIn.read(array);
             }
             System.out.println(builder.toString());
         } catch (IOException e) {
