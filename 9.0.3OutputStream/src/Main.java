@@ -19,7 +19,6 @@ public class Main {
         try(OutputStream bufferOut = new BufferedOutputStream(new FileOutputStream(fileName, true))){
             bufferOut.write(name.getBytes());
             bufferOut.write("\n".getBytes());
-            bufferOut.flush();
         }catch (Exception e){
             e.printStackTrace();
         }
