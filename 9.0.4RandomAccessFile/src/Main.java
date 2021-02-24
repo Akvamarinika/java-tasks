@@ -6,11 +6,13 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        boolean sucessDir = false;
+        boolean sucessFile = false;
         File folder = new File("folder1");
-        folder.mkdir();
+        sucessDir = folder.mkdir();
         File file = new File(folder,"text.txt");
         try {
-            file.createNewFile();
+            sucessFile = file.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -24,9 +26,9 @@ public class Main {
                 try(RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw")) {
                     byte[] array = new byte[3000];
                     randomAccessFile.seek((numberPage - 1) * array.length);
-                    randomAccessFile.read(array);
-                    System.out.println(new String(array));
-                    System.out.println("Enter number page OR 'stop': ");
+                    int count = randomAccessFile.read(array);
+                    System.out.println(new String(array, 0, count));
+                    System.out.println("Enter number page1 OR 'stop': ");
                     input = scanner.nextLine();
                 } catch (IOException e){
                     e.printStackTrace();
