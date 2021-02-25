@@ -21,13 +21,13 @@ public class Main {
         writeObject(arrayList, file);
 
         List<Cat> cats = readObjects(file);
-        for (Cat cat : cats){
+        for (Cat cat : cats) {
             System.out.println(cat.getName());
         }
 
     }
 
-    private static void writeObject(List<Cat> cat, File filename){
+    private static void writeObject(List<Cat> cat, File filename) {
 
         if (!filename.exists()) {
             try {
@@ -37,16 +37,16 @@ public class Main {
             }
         }
 
-        try(ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filename))) {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(filename))) {
             objectOutputStream.writeObject(cat);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static List<Cat> readObjects(File filename){
-        try(ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filename))){
-            return  (List<Cat>) objectInputStream.readObject();
+    private static List<Cat> readObjects(File filename) {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(filename))) {
+            return (List<Cat>) objectInputStream.readObject();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
