@@ -14,6 +14,10 @@ public class Main
     public static void main(String[] args)
     {
         ArrayList<Employee> staff = loadStaffFromFile();
+        Optional<Employee> maximumE = staff.stream()
+                .filter(e -> new SimpleDateFormat("yyyy").format(e.getWorkStart()).equals("2017"))
+                .max(Comparator.comparing(Employee::getSalary));
+        maximumE.ifPresent(System.out::println);
 
 
     }
