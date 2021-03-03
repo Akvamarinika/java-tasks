@@ -1,44 +1,71 @@
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class Main {
     private static final Object monitor = new Object();
-    private static BlockingQueue<Runnable> blockingQueue = new LinkedBlockingQueue<>();
+    private static String next = "A";
 
     public static void main(String[] args) {
 
+        Thread thread1 = new Thread(() -> {
+            synchronized (monitor) {
+                try {
+                    for (int i = 0; i < 5; i++) {
+                        while (!next.equals("A")) {
+                            monitor.wait();
+                        }
 
-        new Thread(() -> {
-            synchronized (monitor){
-                for (int i = 0; i < 5; i++){
-                    System.out.println("A");
+                        System.out.print(next);
+                        next = "B";
+                        monitor.notifyAll();
+
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        Thread thread2 = new Thread(() -> {
+            synchronized (monitor) {
+                try {
+                    for (int i = 0; i < 5; i++) {
+                        while (!next.equals("B")) {
+                            monitor.wait();
+                        }
+
+                        System.out.print(next);
+                        next = "C";
+                        monitor.notifyAll();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+
+        Thread thread3 = new Thread(() -> {
+            synchronized (monitor) {
+                try {
+                    for (int i = 0; i < 5; i++) {
+                        while (!next.equals("C")) {
+                            monitor.wait();
+                        }
+
+                        System.out.print(next);
+                        next = "A";
+                        monitor.notifyAll();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
 
-        new Thread(() -> {
-            synchronized (monitor){
-                for (int i = 0; i < 5; i++){
-                    System.out.println("B");
-                }
-            }
 
-        });
-
-        new Thread(() -> {
-            synchronized (monitor){
-                for (int i = 0; i < 5; i++){
-                    System.out.println("C");
-                }
-            }
-        });
-
-
+        thread1.start();
+        thread2.start();
+        thread3.start();
     }
-
-   /* public static void addThread(){
-        synchronized (monitor){
-            if (blockingQueue.isEmpty())
-        }
-    }*/
 }
