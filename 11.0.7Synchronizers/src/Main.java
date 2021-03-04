@@ -1,60 +1,43 @@
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.*;
 
 public class Main {
+    private static final int COUNT_CARS = 10;
+    private static final Semaphore semaphoreTunnel = new Semaphore(3);
+    private static final CountDownLatch countDownLatch = new CountDownLatch(10);
+    private static final Phaser phaser = new Phaser(10);
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(COUNT_CARS);
     public static void main(String[] args) {
         String winner = "";
         long bestTime = Long.MAX_VALUE;
-        CountDownLatch mainDownLatch = new CountDownLatch(10);
+        //CountDownLatch mainDownLatch = new CountDownLatch(10);
         ConcurrentHashMap<String,Long> nameTime = new ConcurrentHashMap<>();
-        CountDownLatch countDownLatch = new CountDownLatch(10);
-        Semaphore semaphore = new Semaphore(3);
-        for (int i = 0; i<10; i++){
-            new Thread(() -> {
-                long millis = (long) (Math.random() * 5000 + 1000);
+
+        for (int i = 0; i<COUNT_CARS; i++){
+            Runnable runnable = () -> {
                 String name = Thread.currentThread().getName();
+
+                preparation(name);
+
                 long timeStart = System.currentTimeMillis();
-                try {
-                    System.out.println(name + ": preparation started.");
-                    Thread.sleep(millis);
-                    System.out.println(name + ": preparation finished.");
-                    countDownLatch.countDown();
-                    countDownLatch.await();
+                usualRoad(name);
+                tunnel(name);
+                usualRoad(name);
 
-                    System.out.println(name + ": usual road started.");
-                    Thread.sleep(millis);
-                    System.out.println(name + ": usual road finished.");
+                nameTime.put(name, System.currentTimeMillis() - timeStart);
+                // mainDownLatch.countDown();
+                phaser.arriveAndAwaitAdvance();
+            };
 
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    semaphore.acquire();
-                    System.out.println(name + ": tunnel started.");
-                    Thread.sleep(millis);
-                    System.out.println(name + ": tunnel finished.");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
-                    semaphore.release();
-                }
-
-                try {
-                    System.out.println(name + ": usual_2 road started.");
-                    Thread.sleep(millis);
-                    System.out.println(name + ": usual_2 road finished.");
-                    nameTime.put(name, System.currentTimeMillis() - timeStart);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                mainDownLatch.countDown();
-            }).start();
+            executorService.execute(runnable);
         }
 
+
+        phaser.awaitAdvance(phaser.getPhase());
+        executorService.shutdown();
+
+
         try {
-            mainDownLatch.await();
+            // mainDownLatch.await();
             for (String key : nameTime.keySet()){
                 System.out.println(key + ": " + nameTime.get(key));
                 if (bestTime > nameTime.get(key)){
@@ -62,10 +45,52 @@ public class Main {
                     winner = key;
                 }
             }
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         System.out.println("WIN " + winner + ": " + bestTime);
     }
+
+    public static void rndTimeSleep(){
+        long millis = (long) (Math.random() * 5000 + 1000);
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void preparation(String name){
+        System.out.println(name + ": preparation started.");
+        rndTimeSleep();
+        System.out.println(name + ": preparation finished.");
+        countDownLatch.countDown();
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void usualRoad(String name){
+        System.out.println(name + ": usual road started.");
+        rndTimeSleep();
+        System.out.println(name + ": usual road finished.");
+    }
+
+    public static void tunnel(String name){
+        try {
+            semaphoreTunnel.acquire();
+            System.out.println(name + ": tunnel started.");
+            rndTimeSleep();
+            System.out.println(name + ": tunnel finished.");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            semaphoreTunnel.release();
+        }
+    }
+
+
 }
