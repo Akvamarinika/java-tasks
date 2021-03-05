@@ -22,6 +22,6 @@ public class Main {
                 .filter(flight -> flight.getType() == Flight.Type.ARRIVAL &&
                         flight.getDate().getTime() < calendar.getTime().getTime() &&
                         flight.getDate().getTime() > System.currentTimeMillis())
-                .forEach(flight -> System.out.println(flight.getAircraft().getModel() + " " + new SimpleDateFormat("HH:HH").format(flight.getDate())));
+                .forEach(flight -> System.out.println(flight.getAircraft().getModel() + " " + new SimpleDateFormat("HH:mm").format(flight.getDate())));
     }
 }
