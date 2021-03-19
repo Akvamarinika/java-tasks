@@ -3,6 +3,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class Main {
+    private final static int CORES_AMOUNT = Runtime.getRuntime().availableProcessors();
+
     public static void main(String[] args) {
         String srcFolder = "H:\\src";
         String dstFolder = "H:\\dst";
@@ -10,9 +12,9 @@ public class Main {
         File srcDir = new File(srcFolder);
         long start = System.currentTimeMillis();
         File[] files = srcDir.listFiles();
-        
+
         if (files != null) {
-            int lenForThread = files.length / 4;
+            int lenForThread = files.length / CORES_AMOUNT;
 
             File[] files1 = new File[lenForThread];
             System.arraycopy(files, 0, files1, 0, lenForThread);

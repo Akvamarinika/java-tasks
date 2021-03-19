@@ -1,5 +1,8 @@
+import org.imgscalr.Scalr;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
 import java.io.File;
 
 public class ResizerImg implements Runnable{
@@ -54,4 +57,10 @@ public class ResizerImg implements Runnable{
 
         System.out.println("Duration: " + (System.currentTimeMillis() - start));
     }
+
+    public static BufferedImage resize(BufferedImage src, int targetWidth, int targetHeight, BufferedImageOp... ops){
+        BufferedImage scaledImage = Scalr.resize(src, 200);
+        return src;
+    }
+
 }
