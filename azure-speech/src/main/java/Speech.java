@@ -17,6 +17,7 @@ public class Speech {
     private static final String KEY = "be5f4c47488e4d349dbb06b527492c7c";
     private static final String REGION = "francecentral";
     private static final String AUTH_URL = "https://francecentral.api.cognitive.microsoft.com/sts/v1.0/issueToken";
+    private static final String VOICES_URL = "https://francecentral.tts.speech.microsoft.com/cognitiveservices/voices/list";
     private static HttpURLConnection httpURLConnection = null;
 
     public static void main(String[] args) {
@@ -25,8 +26,9 @@ public class Speech {
             String myText = readText(nameFile);
             String token = getToken();
             System.out.println(token);
+            getListOfAnnouncers(token);
             APIRequest(myText);
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -49,9 +51,31 @@ public class Speech {
         return builder.toString();
     }
 
+    public static void getListOfAnnouncers(String myToken) throws IOException {
+        URL url = new URL(VOICES_URL);
+        httpURLConnection = (HttpURLConnection) url.openConnection();
+        httpURLConnection.setRequestMethod("GET");
+        httpURLConnection.setRequestProperty("Authorization", "Bearer " + myToken);
+        System.out.println(getResponse());
+
+    }
+
     public static void APIRequest(String yourText) {
+       /* curl -X POST "https://francecentral.tts.speech.microsoft.com/cognitiveservices/v1" \
+        -H "Authorization: Bearer <TOKEN>" \
+        -H "X-Microsoft-OutputFormat: <FORMAT>" \
+        -H "Content-Type: application/ssml+xml" \
+        -H "User-Agent: <USER-AGENT>" \
+        --output voice.wav \
+        -d "<speak version='1.0' xml:lang='<LANG>'><voice xml:lang='<LANG>' xml:gender='<GENDER>' name='<NAME>'>I've Just seen A face</voice></speak>"*/
+       /* SpeechConfig speechConfig = SpeechConfig.fromSubscription(KEY, REGION);
+        AudioConfig audioConfig = AudioConfig.fromWavFileOutput("voice.wav");
+
+        SpeechSynthesizer synthesizer = new SpeechSynthesizer(speechConfig, audioConfig);
+        synthesizer.SpeakText("A simple test to write to a file.");*/
+
         String gender = "MALE";
-        String voice = "bg-BG-IvanRUS";
+        String voice = "bg-BG-Ivan";
         String requestBody = "<speak version='1.0' xml:lang='en-US'><voice xml:lang='en-US' xml:gender='" + gender + "' name='" + voice + "'>" + yourText + "</voice></speak>";
 
         SpeechConfig speechConfig = SpeechConfig.fromSubscription(KEY, REGION);
