@@ -1,9 +1,12 @@
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Speech {
@@ -11,7 +14,12 @@ public class Speech {
     private static final String REGION = "eastasia";
     private static final String AUTH_URL = "https://eastasia.api.cognitive.microsoft.com/sts/v1.0/issueToken";
     private static final String VOICES_URL = "https://eastasia.tts.speech.microsoft.com/cognitiveservices/voices/list";
+    private static final String URL_FOR_APIRequest = "https://eastasia.tts.speech.microsoft.com/cognitiveservices/v1";
     private static HttpURLConnection httpURLConnection = null;
+    private static List<Speaker> speakersList = null;
+    private static String locale;
+    private static String speaker;
+    private static String gender;
 
     public static void main(String[] args) {
         try {
@@ -20,7 +28,9 @@ public class Speech {
             String myText = readText(nameFile);
             String token = getToken();
             System.out.println(token);
-            getListOfAnnouncers(token);
+            String jsonArr = getSpeakers(token);
+            parseJSON(jsonArr);
+            selectSpeakersAndLanguage();
             APIRequest(myText, token);
             writeInBinaryFileWav(newFileName);
             averageCharDurationInSec(newFileName, myText);
@@ -47,21 +57,42 @@ public class Speech {
         return builder.toString();
     }
 
-    public static void getListOfAnnouncers(String myToken) throws IOException {
+    public static String getSpeakers(String myToken) throws IOException {
         URL url = new URL(VOICES_URL);
         httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.setRequestMethod("GET");
         httpURLConnection.setRequestProperty("Authorization", "Bearer " + myToken);
-        System.out.println(getResponse());
+        return getResponse();
+    }
+
+    public static void parseJSON(String jsonArray) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        speakersList = mapper.readValue(jsonArray, new TypeReference<List<Speaker>>() {});
+    }
+
+    public static void selectSpeakersAndLanguage(){
+        Scanner scanner = new Scanner(System.in);
+        speakersList.stream().map(Speaker::getLocale)
+                             .distinct()
+                             .forEach(locale -> System.out.print(locale + " "));
+        System.out.println("\nEnter language: ");
+        locale = scanner.nextLine().trim();
+        speakersList.stream().filter(x -> x.getLocale().equals(locale))
+                             .forEach(x -> System.out.println(x.getShortName()));
+        System.out.println("\nEnter speaker: ");
+        speaker = scanner.nextLine();
+        Optional<Speaker> optionalSpeaker = speakersList.stream().filter(x -> x.getShortName().equals(speaker))
+                                      .findFirst();
+        gender = optionalSpeaker.map(Speaker::getGender).orElse(null);
 
     }
 
     public static void APIRequest(String yourText, String myToken) throws IOException {
-        String gender = "Male";
-        String voice = "en-US-GuyRUS";
-        String POSTText = "<speak version='1.0' xml:lang='en-US'><voice xml:lang='en-US' xml:gender='" + gender + "' name='" + voice + "'>" + yourText + "</voice></speak>";
+        //String gender = "Male";
+        //String voice = "en-US-GuyRUS";
+        String POSTText = "<speak version='1.0' xml:lang='en-US'><voice xml:lang='en-US' xml:gender='" + gender + "' name='" + speaker + "'>" + yourText + "</voice></speak>";
         //String POSTText = "<speak version='1.0' xml:lang='en-US'><voice xml:lang='en-US' xml:gender='Female' name='en-US-AriaRUS'>I've Just seen A face</voice></speak>";
-        URL url = new URL("https://eastasia.tts.speech.microsoft.com/cognitiveservices/v1");
+        URL url = new URL(URL_FOR_APIRequest);
         httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.setDoOutput(true); // set POST
         httpURLConnection.setRequestProperty("Authorization", "Bearer " + myToken);
