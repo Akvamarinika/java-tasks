@@ -9,9 +9,16 @@ public class CustomerStorage
         storage = new HashMap<>();
     }
 
-    public void addCustomer(String data)
+    public void addCustomer(String data) throws IllegalArgumentException
     {
         String[] components = data.split("\\s+");
+        if(components.length != 4){
+            throw new IllegalArgumentException("Wrong command! Available command examples: \n"  +
+                    "add Василий Петров " +
+                    "vasily.petrov@gmail.com +79215637722");
+        }
+
+
         String name = components[0] + " " + components[1];
         storage.put(name, new Customer(name, components[3], components[2]));
     }
