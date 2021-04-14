@@ -45,6 +45,16 @@ public class Main
                 }
             } catch (IllegalArgumentException e) {
                 e.getMessage();
+            } catch (IndexOutOfBoundsException e){
+                System.out.println("Wrong count args!;");
+            }catch (WrongEmailException e) {
+                System.out.println(e.getMessage());
+                System.out.println(e.getEmail());
+            } catch (WrongPhoneNumberException e) {
+                System.out.println(e.getMessage());
+                System.out.println(e.getPhone());
+            }catch (NotFoundUserException e){
+                System.out.println(e.getMessage() + " " + e.getUser());
             }
         }
     }
