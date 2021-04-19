@@ -45,45 +45,23 @@ public class RouteCalculatorTest extends TestCase {
         station31 = new Station("Садовая", line3);
         station32 = new Station("Спасская", line3);
 
-        line1.addStation(station11);
+     /*   line1.addStation(station11);
         line1.addStation(station12);
         line1.addStation(station13);
         line2.addStation(station21);
         line2.addStation(station22);
         line2.addStation(station23);
         line3.addStation(station31);
-        line3.addStation(station32);
+        line3.addStation(station32);*/
 
+        route = Stream.of(station11, station12, station13, station21, station22, station23, station31, station32)
+                .collect(Collectors.toList());
 
-        route.add(station11);
-        route.add(station12);
-        route.add(station13);
-        route.add(station21);
-        route.add(station22);
-        route.add(station23);
-        route.add(station31);
-        route.add(station32);
-
-      /*  stationIndex.addLine(line1);
-        stationIndex.addLine(line2);
-        stationIndex.addLine(line3);
-        stationIndex.addStation(station11);
-        stationIndex.addStation(station12);
-        stationIndex.addStation(station13);
-        stationIndex.addStation(station21);
-        stationIndex.addStation(station22);
-        stationIndex.addStation(station23);
-        stationIndex.addStation(station31);
-        stationIndex.addStation(station32);
-*/
-
+        route.stream().peek(st -> st.getLine().addStation(st)).forEach(stationIndex::addStation);
+        Stream.of(line1, line2, line3).forEach(stationIndex::addLine);
         stationIndex.addConnection(Stream.of(station13, station21).collect(Collectors.toList()));
         stationIndex.addConnection(Stream.of(station23, station31).collect(Collectors.toList()));
-        stationIndex.getConnectedStations(station12);
-        stationIndex.getConnectedStations(station23);
         calculator = new RouteCalculator(stationIndex);
-
-
 
     }
 
