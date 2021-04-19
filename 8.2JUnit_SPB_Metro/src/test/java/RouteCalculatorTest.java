@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/*TODO 1.	Напишите тесты на все методы класса RouteCalculator в проекте SPBMetro.
+    2.	С помощью тестов и отладки исправьте ошибку, которую вы найдёте в проекте SPBMetro в классе RouteCalculator.
+*/
+
 public class RouteCalculatorTest extends TestCase {
     List<Station> route;
     StationIndex stationIndex;
@@ -22,10 +26,9 @@ public class RouteCalculatorTest extends TestCase {
     Station station23;
     Station station31;
     Station station32;
-    Station station33;
 
     @Override
-    protected void setUp() throws Exception {
+    protected void setUp() {
         route = new ArrayList<>();
         stationIndex = new StationIndex();
 
@@ -41,7 +44,16 @@ public class RouteCalculatorTest extends TestCase {
         station23 = new Station("Чёрная речка", line2);
         station31 = new Station("Садовая", line3);
         station32 = new Station("Спасская", line3);
-        station33 = new Station("Спортивная", line3);
+
+        line1.addStation(station11);
+        line1.addStation(station12);
+        line1.addStation(station13);
+        line2.addStation(station21);
+        line2.addStation(station22);
+        line2.addStation(station23);
+        line3.addStation(station31);
+        line3.addStation(station32);
+
 
         route.add(station11);
         route.add(station12);
@@ -51,9 +63,8 @@ public class RouteCalculatorTest extends TestCase {
         route.add(station23);
         route.add(station31);
         route.add(station32);
-        route.add(station33);
 
-        stationIndex.addLine(line1);
+      /*  stationIndex.addLine(line1);
         stationIndex.addLine(line2);
         stationIndex.addLine(line3);
         stationIndex.addStation(station11);
@@ -64,11 +75,11 @@ public class RouteCalculatorTest extends TestCase {
         stationIndex.addStation(station23);
         stationIndex.addStation(station31);
         stationIndex.addStation(station32);
-        stationIndex.addStation(station33);
+*/
 
         stationIndex.addConnection(Stream.of(station13, station21).collect(Collectors.toList()));
         stationIndex.addConnection(Stream.of(station23, station31).collect(Collectors.toList()));
-        stationIndex.getConnectedStations(station13);
+        stationIndex.getConnectedStations(station12);
         stationIndex.getConnectedStations(station23);
         calculator = new RouteCalculator(stationIndex);
 
@@ -78,25 +89,32 @@ public class RouteCalculatorTest extends TestCase {
 
     public void testCalculateDuration(){
         double actual = RouteCalculator.calculateDuration(route);
-        double expected = 22.0;
+        double expected = 19.5;
         assertEquals(expected, actual);
     }
 
-    public void testGetShortestRoute(){
-
+    public void testGetShortestRouteDirectRoute(){
+        List<Station> expectedList = Stream.of(station11, station12, station13).collect(Collectors.toList());
         List<Station> stations = calculator.getShortestRoute(station11, station13);
         assertEquals(3, stations.size());
+        assertEquals(expectedList, stations);
     }
 
-    public void testGetShortestRoute2(){
-
-        List<Station> stations = calculator.getShortestRoute(station11, station13);
-        assertEquals(3, stations.size());
+    public void testGetRouteWithOneConnection(){
+        List<Station> expectedList = Stream.of(station11, station12, station13, station21, station22)
+                .collect(Collectors.toList());
+        List<Station> stations = calculator.getShortestRoute(station11, station22);
+        assertEquals(5, stations.size());
+        assertEquals(expectedList, stations);
     }
 
-    public void testGetRouteWithTwoConnections(){
-
-        List<Station> stations = calculator.getShortestRoute(station11, station13);
-        assertEquals(3, stations.size());
+    public void testGetRouteWithTwoChange(){
+        List<Station> expectedList = Stream.of(station11, station12, station13, station21, station22, station23, station31, station32)
+                .collect(Collectors.toList());
+        List<Station> stations = calculator.getShortestRoute(station11, station32);
+        assertEquals(8, stations.size());
+        assertEquals(expectedList, stations);
     }
+
+
 }
