@@ -57,7 +57,10 @@ public class RouteCalculatorTest extends TestCase {
         route = Stream.of(station11, station12, station13, station21, station22, station23, station31, station32)
                 .collect(Collectors.toList());
 
-        route.stream().peek(st -> st.getLine().addStation(st)).forEach(stationIndex::addStation);
+        route.stream()
+                .peek(st -> st.getLine()
+                .addStation(st))
+                .forEach(stationIndex::addStation);
         Stream.of(line1, line2, line3).forEach(stationIndex::addLine);
         stationIndex.addConnection(Stream.of(station13, station21).collect(Collectors.toList()));
         stationIndex.addConnection(Stream.of(station23, station31).collect(Collectors.toList()));
