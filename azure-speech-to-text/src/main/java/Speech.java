@@ -1,4 +1,3 @@
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
@@ -6,31 +5,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class Speech {
     private static final String KEY = "8c085e691b2940e091e3a4bdf2804a60";
     private static final String URL_FOR_APIRequest = "https://westeurope.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=simple";
-
     private static final String AUTH_URL = "https://westeurope.api.cognitive.microsoft.com/sts/v1.0/issueToken";
-    private static final String VOICES_URL = "https://westeurope.tts.speech.microsoft.com/cognitiveservices/voices/list";
-
     private static HttpURLConnection httpURLConnection = null;
-    private static String locale;
-    private static String speaker;
-    private static String gender;
 
     public static void main(String[] args) {
         try {
             String nameFile = getFileName();
             String newFileName = nameFile.substring(0,nameFile.indexOf(".")) + ".txt";
-          //  String myText = readText(nameFile);
             String token = getToken();
             System.out.println(token);
 
-
-            //selectSpeakersAndLanguage();
             APIRequest(token, nameFile);
             String json = getResponse();
 
@@ -50,24 +39,11 @@ public class Speech {
         return new Scanner(System.in).nextLine().trim();
     }
 
-    public static String readText(String fileName) throws IOException {
-        String line;
-        StringBuilder builder = new StringBuilder();
-        try(BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            while ((line = reader.readLine()) != null){
-                builder.append(line);
-                builder.append('\n');
-            }
-        }
-        return builder.toString();
-    }
-
     public static Transcription parseJSON(String json) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         Transcription transcription = mapper.readValue (json, Transcription.class);
         return transcription;
     }
-
 
     public static void APIRequest(String myToken, String fileName) throws IOException {
         URL url = new URL(URL_FOR_APIRequest);
@@ -88,8 +64,6 @@ public class Speech {
         for (Map.Entry<String, List<String>> header : httpURLConnection.getHeaderFields().entrySet()) {
             System.out.println(header.getKey() + "=" + header.getValue());
         }
-
-
     }
 
     private static void upload(InputStream inputStream) throws IOException {
@@ -155,8 +129,6 @@ public class Speech {
             builder.append(new String(array, 0, count));
             count = bufferIn.read(array);
         }
-        //System.out.println(builder.toString());
-        //httpURLConnection.disconnect();
         return builder.toString();
     }
 }
