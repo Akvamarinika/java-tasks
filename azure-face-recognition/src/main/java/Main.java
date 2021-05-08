@@ -1,5 +1,4 @@
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.imageio.ImageIO;
@@ -9,12 +8,15 @@ import java.net.URL;
 import java.io.*;
 import java.util.List;
 import java.util.Map;
-//https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Collage_of_Six_Cats-01.jpg/1200px-Collage_of_Six_Cats-01.jpg
+//https://4.bp.blogspot.com/-yAIaurHWbDs/UjcXMiM4QMI/AAAAAAAAWDI/sklohMF7XRA/w1200-h630-p-k-no-nu/changingface+ofyoda.jpg
+//https://nerdophiles.files.wordpress.com/2014/09/sailormoonmusical14.jpg
+
 public class Main {
     private static final String URL_FOR_APIRequest = "https://westeurope.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=false&recognitionModel=recognition_04&returnRecognitionModel=false&detectionModel=detection_03&faceIdTimeToLive=86400";
     private static HttpURLConnection httpURLConnection = null;
     private static final String KEY = "01f0026ec4bc4880b6b8713dbd581e97";
-    private static final String JSON_CONTENT = "{\"url\": \"https://4.bp.blogspot.com/-yAIaurHWbDs/UjcXMiM4QMI/AAAAAAAAWDI/sklohMF7XRA/w1200-h630-p-k-no-nu/changingface+ofyoda.jpg\"}";
+    private static final String JSON_CONTENT = "{\"url\": \"https://nerdophiles.files.wordpress.com/2014/09/sailormoonmusical14.jpg\"}";
+    private static final String IMG_PATH = "src\\main\\resources\\sailormoonmusical.jpg";
     private static List<Face> faceList;
 
     public static void main(String[] args) {
@@ -24,17 +26,9 @@ public class Main {
             String json = getResponse();
             System.out.println(json);
             parseJSON(json);
-            System.out.println(faceList);
+           // System.out.println(faceList);
             croppingAnImage();
-           /* int y = Integer.parseInt(faceList.get(0).getFaceRectangle().getTop());
-            int x = Integer.parseInt(faceList.get(0).getFaceRectangle().getLeft());
-            int width = Integer.parseInt(faceList.get(0).getFaceRectangle().getWidth());
-            int height = Integer.parseInt(faceList.get(0).getFaceRectangle().getHeight());
 
-            BufferedImage img= ImageIO.read(new File("src\\main\\resources\\changingface ofyoda.jpg"));
-            BufferedImage tile = img.getSubimage(x, y, width, height);
-            ImageIO.write(tile, "jpg", new File("Square.jpg"));
-            System.out.println(tile);*/
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,7 +36,8 @@ public class Main {
     }
 
     public static void croppingAnImage() throws IOException {
-        File file = new File("src\\main\\resources\\changingface ofyoda.jpg");
+        String imgFormat = IMG_PATH.substring(IMG_PATH.indexOf(".") + 1);
+        File file = new File(IMG_PATH);
         BufferedImage img= ImageIO.read(file);
         BufferedImage dstImg;
         int i = 1;
@@ -56,7 +51,7 @@ public class Main {
            width = Integer.parseInt(face.getFaceRectangle().getWidth());
            height = Integer.parseInt(face.getFaceRectangle().getHeight());
            dstImg = img.getSubimage(x, y, width, height);
-           ImageIO.write(dstImg, "jpg", new File(file.getName().substring(0, file.getName().length()-4) + i + ".jpg"));
+           ImageIO.write(dstImg, imgFormat, new File(file.getName().substring(0, file.getName().length()-4) + i + "." + imgFormat));
            i++;
         }
     }
@@ -75,7 +70,7 @@ public class Main {
     }
 
     private static void uploadJSON() throws IOException {
-        try ( OutputStreamWriter  writer = new OutputStreamWriter(httpURLConnection.getOutputStream(), "UTF-8");) {
+        try ( OutputStreamWriter  writer = new OutputStreamWriter(httpURLConnection.getOutputStream(), "UTF-8")) {
             writer.write(JSON_CONTENT);
             writer.close();
 
@@ -101,7 +96,6 @@ public class Main {
 
     public static void parseJSON(String jsonArray) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        //mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
          faceList = mapper.readValue(jsonArray, new TypeReference<List<Face>>() {});
 
     }
